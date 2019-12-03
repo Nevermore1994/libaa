@@ -1,5 +1,5 @@
 //
-// Created by hw on 2019/11/27.
+// Created by william on 2019/11/27.
 //
 #pragma once
 
@@ -11,10 +11,10 @@ class WavDecoder : public AudioDecoder
 {
 public:
     WavDecoder();
-    ~WavDecoder() = default;
+    virtual ~WavDecoder() = default;
     int open(const std::string& filename) override;
     int read(float *buffer, size_t size) override;
-
+    int decodeFile(float *buffer, size_t size) override;
 private:
     class Impl;
     std::shared_ptr<Impl> impl_;

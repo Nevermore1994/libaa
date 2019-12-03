@@ -1,5 +1,5 @@
 //
-// Created by hw on 2019/11/27.
+// Created by william on 2019/11/27.
 //
 
 #include "aa_wav_decoder.h"
@@ -28,7 +28,7 @@ int WavDecoder::open(const std::string& filename)
 {
     if(!drwav_init_file(&impl_->wav, filename.c_str(), NULL))
     {
-        std::cerr << "Open file failed\n";
+        std::cerr << "Open file "<<  filename << " failed\n";
         return -1;
     }
 
@@ -46,6 +46,20 @@ int WavDecoder::read(float *buffer, size_t size)
     int num_readed = drwav_read_pcm_frames_f32(&impl_->wav, frame_to_read, buffer);
 
     return num_readed;
+}
+int WavDecoder::decodeFile(float *buffer, size_t size)
+{
+    const auto total_samples = num_channels_ * num_frames_;
+    if(size < total_samples)
+    {
+        std::cerr << "The total samples is " << total_samples
+                  << ", the buffer length " << size << " is not enough\n";
+        return -1;
+    }
+    size_t number_samples_acctually_decoded =drwav_read_pcm_frames_f32(
+        &impl_->wav, getNumFrames(), buffer);
+
+    return number_samples_acctually_decoded;
 }
 
 }

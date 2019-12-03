@@ -1,5 +1,5 @@
 //
-// Created by hw on 2019/11/27.
+// Created by william on 2019/11/27.
 //
 #pragma once
 
@@ -12,9 +12,30 @@ class AudioDecoder
 {
 public:
     AudioDecoder() = default;
-    ~AudioDecoder() = default;
+    virtual ~AudioDecoder() = default;
+    /**
+     * open audio file
+     * @param filename
+     * @return 0 successful, others failed
+     */
     virtual int open(const std::string& filename) = 0;
+
+    /**
+     * decode samples to pre-alloc buffer
+     * @param buffer pre-alloc buffer
+     * @param size size of pre-alloc buffer
+     * @return number of decoded samples
+     */
     virtual int read(float* buffer, size_t size) = 0;
+
+    /**
+     * decode whole file
+     * @param buffer pre-alloc buffer to hold whole file samples
+     * @param size total pcm samples, equals getNumFrames()*getNumChannels()
+     * @return number of decoded samples
+     */
+    virtual int decodeFile(float* buffer, size_t size) = 0;
+
     std::vector<float> read(size_t size)
     {
         std::vector<float> result(size);
@@ -40,4 +61,7 @@ protected:
     size_t num_bits_    {0};
     size_t num_frames_  {0};
 };
+
+
+
 }
