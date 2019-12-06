@@ -11,11 +11,18 @@ add_subdirectory(third_party)
 
 include_directories(include)
 include_directories(third_party/dr_libs)
+include_directories(third_party/kissfft)
 
 set(FILEIO_SRC
-        src/aa_wav_decoder.cpp
-        src/aa_audio_file.cpp)
+        src/fileio/aa_wav_decoder.cpp
+        src/fileio/aa_audio_file.cpp)
 
-add_library(libaa ${FILEIO_SRC})
+set(DSP_SR
+        src/dsp/aa_fft.cpp
+        third_party/kissfft/kiss_fft.c
+        third_party/kissfft/kiss_fftr.c)
+
+add_library(libaa ${FILEIO_SRC} ${DSP_SR})
 
 add_subdirectory(example)
+add_subdirectory(test)
