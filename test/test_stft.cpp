@@ -2,6 +2,7 @@
 // Created by william on 2019/12/9.
 //
 #include "aa_fft.h"
+#include "aa_stft.h"
 #include "aa_test_helper.h"
 #include <gmock/gmock.h>
 #include <Eigen/Core>
@@ -12,54 +13,6 @@ using namespace testing;
 using namespace Eigen;
 using namespace std;
 using namespace libaa;
-
-class STFTOption
-{
-public:
-    size_t hop_size{256};
-    size_t win_size{1024};
-};
-
-bool isPowerOf2(size_t number)
-{
-    return (number & number - 1) == 0 && number > 0;
-}
-
-class STFT
-{
-public:
-    static void stft(const float* data, size_t data_len, const STFTOption& opts,
-              Eigen::MatrixXcf& result)
-    {
-        if(!isPowerOf2(opts.win_size))
-        {
-            std::cerr << "stft only support window size of 2^n\n";
-            return;
-        }
-
-        const int nfft_out = opts.win_size / 2 + 1;
-        const int num_frames = data_len / opts.hop_size;
-
-        result.resize(nfft_out, num_frames);
-        auto* result_data = result.data();
-
-        int idx = 0;
-        vector<float> cur_frame(opts.win_size, 0.0);
-
-        FFT fft(opts.win_size);
-
-        for(;idx < data_len - opts.hop_size;)
-        {
-            std::copy(data + idx,
-                      data + idx + opts.win_size, cur_frame.begin());
-
-            fft.forward(cur_frame.data(), result_data);
-
-            result_data += nfft_out;
-            idx += opts.hop_size;
-        }
-    }
-};
 
 class ASTFT : public Test
 {
@@ -84,7 +37,7 @@ public:
 
 TEST_F(ASTFT, NumberFramesEqualsSizeDivideHopSize)
 {
-    STFT::stft(fake_data.data(), fake_data.size(), opts, stft_result);
+    stft(fake_data.data(), fake_data.size(), opts, stft_result);
 
     ASSERT_THAT(stft_result.rows(), Eq(win_size/2 + 1));
     ASSERT_THAT(stft_result.cols(), Eq(data_length / hop_size));
@@ -92,7 +45,7 @@ TEST_F(ASTFT, NumberFramesEqualsSizeDivideHopSize)
 
 TEST_F(ASTFT, SlideWindowWithHopSize)
 {
-    STFT::stft(fake_data.data(), fake_data.size(), opts, stft_result);
+    stft(fake_data.data(), fake_data.size(), opts, stft_result);
 
     FFT fft(win_size);
 
@@ -116,8 +69,5 @@ TEST_F(ASTFT, SlideWindowWithHopSize)
         idx += hop_size;
         ++frame_idx;
     }
-//    vector<float> first_frame(fake_data.begin(), fake_data.begin() + win_size);
-//    vector<float> second_frame(fake_data.begin() + hop_size, fake_data.begin() + 2*win_size);
-
 
 }
