@@ -1,12 +1,14 @@
 include_directories(${gmock_SOURCE_DIR}/include)
 include_directories(${gtest_SOURCE_DIR}/include)
 include_directories(${CMAKE_SOURCE_DIR}/third_party/kissfft)
+include_directories(${CMAKE_SOURCE_DIR}/third_party/Eigen3.3.7)
 
 message(STATUS ${CMAKE_SOURCE_DIR})
 
 add_executable(test_dsp_main
         test_dsp_main.cpp
         test_fft.cpp
+        test_stft.cpp
         )
 target_link_libraries(test_dsp_main
         gmock_main

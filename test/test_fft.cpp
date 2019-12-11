@@ -3,17 +3,14 @@
 //
 
 #include "aa_fft.h"
+#include "aa_test_helper.h"
 #include <gmock/gmock.h>
 #include <vector>
 #include <complex>
+
 using namespace testing;
 using namespace std;
 using namespace libaa;
-
-MATCHER_P(NearWithPrecision, ferr, "")
-{
-    return abs(get<0>(arg) - get<1>(arg)) < ferr;
-}
 
 class AFFT : public Test
 {
