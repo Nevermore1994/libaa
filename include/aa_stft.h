@@ -18,6 +18,12 @@ public:
     size_t win_size{1024};
 };
 
-void stft(const float* data, size_t data_len, const STFTOption& opts, Eigen::MatrixXcf& result);
+class STFT
+{
+public:
+    static void stft(const float* data, size_t data_len, const STFTOption& opts, Eigen::MatrixXcf& result);
+
+};
+
 
 }

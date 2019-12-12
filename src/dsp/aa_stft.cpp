@@ -7,7 +7,9 @@
 
 namespace libaa
 {
-void stft(const float* data, size_t data_len, const STFTOption& opts,
+
+
+void STFT::stft(const float* data, size_t data_len, const STFTOption& opts,
           Eigen::MatrixXcf& result)
 {
     if(!isPowerOf2(opts.win_size))

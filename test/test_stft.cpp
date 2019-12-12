@@ -37,7 +37,7 @@ public:
 
 TEST_F(ASTFT, NumberFramesEqualsSizeDivideHopSize)
 {
-    stft(fake_data.data(), fake_data.size(), opts, stft_result);
+    STFT::stft(fake_data.data(), fake_data.size(), opts, stft_result);
 
     ASSERT_THAT(stft_result.rows(), Eq(win_size/2 + 1));
     ASSERT_THAT(stft_result.cols(), Eq(data_length / hop_size));
@@ -45,7 +45,7 @@ TEST_F(ASTFT, NumberFramesEqualsSizeDivideHopSize)
 
 TEST_F(ASTFT, SlideWindowWithHopSize)
 {
-    stft(fake_data.data(), fake_data.size(), opts, stft_result);
+    STFT::stft(fake_data.data(), fake_data.size(), opts, stft_result);
 
     FFT fft(win_size);
 

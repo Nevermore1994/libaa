@@ -3,7 +3,7 @@
 //
 #pragma once
 
-#include "aa_audio_decoder.h"
+#include "../src/fileio/aa_audio_decoder.h"
 
 namespace libaa
 {
