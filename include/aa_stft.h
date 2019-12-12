@@ -3,6 +3,7 @@
 //
 
 #pragma once
+#include "aa_options.h"
 #include "aa_fft.h"
 #include <Eigen/Core>
 #include <vector>
@@ -11,18 +12,12 @@
 namespace libaa
 {
 
-class STFTOption
-{
-public:
-    size_t hop_size{256};
-    size_t win_size{1024};
-};
 
 class STFT
 {
 public:
-    static void stft(const float* data, size_t data_len, const STFTOption& opts, Eigen::MatrixXcf& result);
-
+    static void stft(const float* data, size_t data_len, const STFTOption& opts, Eigen::ArrayXXcf& S);
+    static void istft(const Eigen::MatrixXcf& S, const STFTOption& opts, Eigen::ArrayXf& output);
 };
 
 

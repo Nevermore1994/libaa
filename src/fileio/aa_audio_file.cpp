@@ -146,5 +146,20 @@ int AudioFile::saveToWave(const std::string& save_path) const
     drwav_uninit(&wav);
     return 0;
 }
+void AudioFile::setChannelData(int channel, float *data, size_t data_len)
+{
+    if(channel >= 2)
+    {
+        std::cerr << "channel out of bound: only support mono(0) or stereo(2)\n";
+        return;
+    }
+
+    if(samples.size() < channel)
+    {
+        samples.resize(channel);
+    }
+
+    std::copy(data, data + data_len, samples[channel].begin());
+}
 
 }

@@ -9,6 +9,7 @@ add_executable(test_dsp_main
         test_dsp_main.cpp
         test_fft.cpp
         test_stft.cpp
+        test_window.cpp
         )
 target_link_libraries(test_dsp_main
         gmock_main

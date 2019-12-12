@@ -3,8 +3,10 @@
 //
 #include "aa_audio_file.h"
 #include "aa_stft.h"
+#include "aa_window.h"
 #include <Eigen/Core>
 #include <iostream>
+#include <fstream>
 #include <string>
 using namespace std;
 using namespace libaa;
@@ -23,26 +25,20 @@ int main()
     auto* left_channel = audiofile.samples[0].data();
     auto num_frames = audiofile.getNumFrames();
 
-    MatrixXcf stft_result;
+    // stft
+    ArrayXXcf stft_result;
     STFTOption opts;
     STFT::stft(left_channel, num_frames, opts, stft_result);
 
     cout << "stft result: " << stft_result.rows() << "x" << stft_result.cols() << endl;
 
     // istft
-    const size_t istft_out_len = (stft_result.cols() - 1) * opts.hop_size + opts.win_size;
-    vector<float> istft_out(istft_out_len);
+    Eigen::ArrayXf istft_out;
+    STFT::istft(stft_result, opts, istft_out);
 
-    FFT fft(opts.win_size);
-    auto* freq_data = stft_result.data();
-    vector<float> time_data(opts.win_size);
-
-    for(int i = 0; i < stft_result.cols(); ++i)
-    {
-        fft.inverse(freq_data, time_data.data());
-
-        freq_data += stft_result.rows();
-    }
+    // copy synthetised data to audio file
+    audiofile.setChannelData(0, istft_out.data(), istft_out.size());
+    audiofile.saveToWave("istft_result.wav");
 
     return 0;
 }

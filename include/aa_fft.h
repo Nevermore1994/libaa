@@ -15,8 +15,8 @@ public:
 
     ~FFT();
 
-    void forward(float* time_in, std::complex<float>* freq_out);
-    void inverse(std::complex<float>* freq_in, float* time_out);
+    void forward(const float* time_in, std::complex<float>* freq_out);
+    void inverse(const std::complex<float>* freq_in, float* time_out);
 
 private:
     size_t nfft_{0};

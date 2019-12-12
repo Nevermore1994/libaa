@@ -27,13 +27,13 @@ FFT::~FFT()
     kiss_fftr_free(impl_->inverse_cfg_);
 }
 
-void FFT::forward(float* time_in, std::complex<float>* freq_out)
+void FFT::forward(const float* time_in, std::complex<float>* freq_out)
 {
     kiss_fftr(impl_->forward_cfg_, time_in, reinterpret_cast<kiss_fft_cpx*>(freq_out));
 }
 
-void FFT::inverse(std::complex<float>* freq_in, float* time_out)
+void FFT::inverse(const std::complex<float>* freq_in, float* time_out)
 {
-    kiss_fftri(impl_->inverse_cfg_, reinterpret_cast<kiss_fft_cpx*>(freq_in), time_out);
+    kiss_fftri(impl_->inverse_cfg_, reinterpret_cast<const kiss_fft_cpx*>(freq_in), time_out);
 }
 }

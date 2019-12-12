@@ -36,7 +36,7 @@ float hanningAtPoint(float point, int numSamples){
     return 0.5f * ( 1.0f - cosf ( (2.0f * M_PI * point) / ( (float)numSamples - 1.0f) ) );
 }
 
-Eigen::VectorXf Window::getWindow(WindowType win_type, size_t win_size)
+Eigen::ArrayXf Window::getWindow(WindowType win_type, size_t win_size)
 {
     std::function<float(int,int)> win_func = hammingAtPoint;
 

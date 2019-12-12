@@ -4,6 +4,7 @@
 #include "aa_fft.h"
 #include "aa_stft.h"
 #include "aa_test_helper.h"
+#include "aa_window.h"
 #include <gmock/gmock.h>
 #include <Eigen/Core>
 #include <vector>
@@ -31,7 +32,7 @@ public:
 
     STFTOption opts;
     vector<float> fake_data;
-    Eigen::MatrixXcf stft_result;
+    Eigen::ArrayXXcf stft_result;
 
 };
 
@@ -51,15 +52,20 @@ TEST_F(ASTFT, SlideWindowWithHopSize)
 
     int idx = 0;
     int frame_idx = 0;
+    ArrayXf window = Window::getWindow(opts.win_type, opts.win_size);
+
     for(;idx < fake_data.size() - hop_size;)
     {
         vector<float> cur_frame(fake_data.begin() + idx,
                                 fake_data.begin() + idx + win_size);
 
+        // applying window
+        for(int i = 0;i < win_size; ++i) { cur_frame[i] *= window(i); }
+
         vector<complex<float>> cur_fft_out(win_size/2 + 1);
         fft.forward(cur_frame.data(), cur_fft_out.data());
 
-        Eigen::VectorXcf stft_cur = stft_result.col(frame_idx);
+        Eigen::MatrixXcf stft_cur = stft_result.col(frame_idx);
 
         for(int i = 0; i < win_size/2 + 1; ++i)
         {
