@@ -24,6 +24,7 @@ set(DSP_SR
         third_party/kissfft/kiss_fftr.c
         src/dsp/aa_stft.cpp
         src/dsp/aa_window.cpp
+        src/dsp/aa_mfcc.cpp
         )
 
 add_library(libaa ${FILEIO_SRC} ${DSP_SR})

@@ -30,7 +30,7 @@ public:
     const int win_size = 8;
     const int data_length = 40;
 
-    STFTOption opts;
+    Options opts;
     vector<float> fake_data;
     Eigen::ArrayXXcf stft_result;
 
@@ -38,7 +38,7 @@ public:
 
 TEST_F(ASTFT, NumberFramesEqualsSizeDivideHopSize)
 {
-    STFT::stft(fake_data.data(), fake_data.size(), opts, stft_result);
+    stft_result = STFT::stft(fake_data.data(), fake_data.size(), opts);
 
     ASSERT_THAT(stft_result.rows(), Eq(win_size/2 + 1));
     ASSERT_THAT(stft_result.cols(), Eq(data_length / hop_size));
@@ -46,7 +46,7 @@ TEST_F(ASTFT, NumberFramesEqualsSizeDivideHopSize)
 
 TEST_F(ASTFT, SlideWindowWithHopSize)
 {
-    STFT::stft(fake_data.data(), fake_data.size(), opts, stft_result);
+    stft_result = STFT::stft(fake_data.data(), fake_data.size(), opts);
 
     FFT fft(win_size);
 

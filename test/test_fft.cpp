@@ -60,3 +60,18 @@ TEST_F(AFFT, inverse)
 
     ASSERT_THAT(time_out, ContainerEq(time_out_gt));
 }
+
+TEST_F(AFFT, notAPowerof2)
+{
+    vector<float> in = {0,1,2,3,4,5};
+    vector<complex<float>> out(in.size()/2 + 1);
+
+    FFT fft(in.size());
+
+    fft.forward(in.data(), out.data());
+
+    for(auto x : out)
+    {
+        cout << x << endl;
+    }
+}

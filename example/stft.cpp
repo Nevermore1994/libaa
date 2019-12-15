@@ -26,15 +26,13 @@ int main()
     auto num_frames = audiofile.getNumFrames();
 
     // stft
-    ArrayXXcf stft_result;
-    STFTOption opts;
-    STFT::stft(left_channel, num_frames, opts, stft_result);
+    Options opts;
+    ArrayXXcf stft_result = STFT::stft(left_channel, num_frames, opts);
 
     cout << "stft result: " << stft_result.rows() << "x" << stft_result.cols() << endl;
 
     // istft
-    Eigen::ArrayXf istft_out;
-    STFT::istft(stft_result, opts, istft_out);
+    Eigen::ArrayXf istft_out = STFT::istft(stft_result, opts);
 
     // copy synthetised data to audio file
     audiofile.setChannelData(0, istft_out.data(), istft_out.size());

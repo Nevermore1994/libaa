@@ -18,12 +18,19 @@ enum class WindowType
     kBlackmanHarris
 };
 
-class STFTOption
+class Options
 {
 public:
     size_t hop_size{256};
     size_t win_size{1024};
     WindowType win_type{WindowType::kHann};
+
+    // mfcc options
+    float fmin{50};
+    float fmax{3700};
+    size_t n_mfcc{20};
+    size_t n_mels{88};
+    bool norm{true};
 };
 
 }

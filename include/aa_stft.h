@@ -16,8 +16,8 @@ namespace libaa
 class STFT
 {
 public:
-    static void stft(const float* data, size_t data_len, const STFTOption& opts, Eigen::ArrayXXcf& S);
-    static void istft(const Eigen::MatrixXcf& S, const STFTOption& opts, Eigen::ArrayXf& output);
+    static Eigen::ArrayXXcf stft(const float* data, size_t data_len, const Options& opts);
+    static Eigen::ArrayXf istft(const Eigen::MatrixXcf& S, const Options& opts);
 };
 
 
