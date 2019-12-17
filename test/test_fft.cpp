@@ -61,17 +61,16 @@ TEST_F(AFFT, inverse)
     ASSERT_THAT(time_out, ContainerEq(time_out_gt));
 }
 
-TEST_F(AFFT, notAPowerof2)
+
+TEST_F(AFFT, fftconvolve)
 {
-    vector<float> in = {0,1,2,3,4,5};
-    vector<complex<float>> out(in.size()/2 + 1);
+    vector<float> x{0,1,2,3,4,5,6,7};
+    vector<float> y{0,1,2,3};
 
-    FFT fft(in.size());
+    vector<float> conv_result = FFT::fftconvolve(x.data(), x.size(), y.data(), y.size());
 
-    fft.forward(in.data(), out.data());
-
-    for(auto x : out)
-    {
-        cout << x << endl;
-    }
+    int expect_out_size = std::max(x.size(), y.size());
+    vector<float> expect_conv_result = {34, 32, 22, 4, 10, 16, 22, 28};
+    ASSERT_THAT(conv_result.size(), Eq(expect_out_size));
+    ASSERT_THAT(conv_result, Pointwise(NearWithPrecision(1e-6), expect_conv_result));
 }

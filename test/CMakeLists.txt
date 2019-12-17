@@ -10,7 +10,7 @@ add_executable(test_dsp_main
         test_fft.cpp
         test_stft.cpp
         test_window.cpp
-        test_mfcc.cpp
+        test_yin.cpp
         )
 target_link_libraries(test_dsp_main
         gmock_main
