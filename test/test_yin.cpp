@@ -31,6 +31,9 @@ public:
         difference(data);
         cumulativeMeanNormaliztion();
         int tau = absoluteThreshold();
+        float better_tau = parabolicInterpolation(tau);
+
+        cout << "f0: " << float(sample_rate_)/float(better_tau) << endl;
         cout << "f0: " << float(sample_rate_)/float(tau) << endl;
         return 0.0f;
     }
@@ -82,16 +85,34 @@ public:
 
                 return tau;
             }
-
-            // TODO: find the global min if cannot find local min
         }
 
         if(tau == yin_buffer_.size())
         {
-            tau = -1;
+            // find the global min if cannot find the local min
+            int min_idx = -1;
+            yin_buffer_.minCoeff(&min_idx);
+            return min_idx;
         }
 
         return tau;
+    }
+
+    float parabolicInterpolation(int tau)
+    {
+        if(tau < kMinTau)
+            return float(sample_rate_);
+
+        if(tau == yin_buffer_.size() - 1)
+            return float(tau);
+
+        float s0 = yin_buffer_(tau - 1);
+        float s1 = yin_buffer_(tau);
+        float s2 = yin_buffer_(tau + 1);
+
+        float better_tau = float(tau) - ( (s2 - s0)/(2*(s2 - s0 - 2*s1)) );
+
+        return better_tau;
     }
 
     size_t block_size_;
@@ -99,6 +120,8 @@ public:
     size_t sample_rate_;
     float threshold_;
     ArrayXf yin_buffer_;
+
+    static constexpr int kMinTau = 2;
 };
 
 ArrayXf genCosWave(size_t size, float f0, size_t sample_rate)
@@ -114,8 +137,8 @@ TEST(AYin, calucateAutocorrelation)
 {
 //    vector<float> fake_data{0,1,2,3,4,5,6,7};
 
-    size_t sample_rate = 44100;
-    auto fake_data = genCosWave(512, 413, sample_rate);
+    size_t sample_rate = 22050;
+    auto fake_data = genCosWave(10000, 1024, sample_rate);
 
     const float threshold = 0.1;
     size_t block_size = fake_data.size();
