@@ -7,6 +7,7 @@
 #include "kiss_fftr.h"
 #include <complex>
 #include <vector>
+#include <memory>
 namespace libaa
 {
 class FFT
