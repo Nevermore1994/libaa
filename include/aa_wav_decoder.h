@@ -4,7 +4,7 @@
 #pragma once
 
 #include "aa_audio_decoder.h"
-
+#include <memory>
 namespace libaa
 {
 class WavDecoder : public AudioDecoder
