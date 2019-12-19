@@ -19,12 +19,12 @@ set(FILEIO_SRC
         src/fileio/aa_audio_file.cpp)
 
 set(DSP_SR
-        src/dsp/aa_fft.cpp
-        third_party/kissfft/kiss_fft.c
-        third_party/kissfft/kiss_fftr.c
-        src/dsp/aa_stft.cpp
-        src/dsp/aa_window.cpp
-        src/dsp/aa_mfcc.cpp
+        ${CMAKE_SOURCE_DIR}/src/dsp/aa_fft.cpp
+        ${CMAKE_SOURCE_DIR}/third_party/kissfft/kiss_fft.c
+        ${CMAKE_SOURCE_DIR}/third_party/kissfft/kiss_fftr.c
+        ${CMAKE_SOURCE_DIR}/src/dsp/aa_stft.cpp
+        ${CMAKE_SOURCE_DIR}/src/dsp/aa_window.cpp
+        ${CMAKE_SOURCE_DIR}/src/dsp/aa_mfcc.cpp
         )
 
 add_library(libaa ${FILEIO_SRC} ${DSP_SR})

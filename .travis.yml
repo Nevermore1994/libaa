@@ -3,7 +3,7 @@ compiler:
   - clang
 
 before_script:
-  - mkdir build
+  - mkdir -p build
   - cd build
   - cmake ..
 
