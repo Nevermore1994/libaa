@@ -3,6 +3,8 @@ cmake_minimum_required(VERSION 3.10)
 project(libaa LANGUAGES CXX C)
 
 set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -stdlib=libc++ -lc++abi")
+
 
 # must return type
 add_compile_options(-Werror=return-type)
