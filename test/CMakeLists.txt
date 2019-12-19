@@ -3,11 +3,6 @@ include_directories(${gtest_SOURCE_DIR}/include)
 include_directories(${CMAKE_SOURCE_DIR}/third_party/kissfft)
 include_directories(${CMAKE_SOURCE_DIR}/third_party/Eigen3.3.7)
 
-message(STATUS ${CMAKE_SOURCE_DIR})
-message(STATUS "CMAKE_BINARY_DIR:${CMAKE_BINARY_DIR}")
-message(STATUS "CMAKE_INSTALL_BINDIR:${CMAKE_INSTALL_BINDIR}")
-
-
 add_executable(test_dsp_main
         test_dsp_main.cpp
         test_fft.cpp
