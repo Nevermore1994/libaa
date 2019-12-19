@@ -36,7 +36,7 @@ Eigen::ArrayXXf MFCC::melspectrogram(const ArrayXXf& S, const Options& opts, int
 ArrayXXf MFCC::melBanks(const ArrayXXf& S, const Options& opts, int sample_rate)
 {
     auto freq2Mel = [](float freq){return 2595.0f * log10(1.0f + freq/700.0f);};
-    auto mel2Freq = [](float mel){return 700.0f * (std::powf(10, mel/2595.0f) - 1.0f);};
+    auto mel2Freq = [](float mel){return 700.0f * (powf(10, mel/2595.0f) - 1.0f);};
 
     const float fmin_mel = freq2Mel(opts.fmin);
     const float fmax_mel = freq2Mel(opts.fmax);
