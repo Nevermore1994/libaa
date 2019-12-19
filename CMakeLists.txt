@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 
-project(libaa)
+project(libaa LANGUAGES CXX C)
 
 set(CMAKE_CXX_STANDARD 14)
 
@@ -18,16 +18,16 @@ set(FILEIO_SRC
         src/fileio/aa_wav_decoder.cpp
         src/fileio/aa_audio_file.cpp)
 
-set(DSP_SR
-        ${CMAKE_SOURCE_DIR}/src/dsp/aa_fft.cpp
-        ${CMAKE_SOURCE_DIR}/third_party/kissfft/kiss_fft.c
-        ${CMAKE_SOURCE_DIR}/third_party/kissfft/kiss_fftr.c
-        ${CMAKE_SOURCE_DIR}/src/dsp/aa_stft.cpp
-        ${CMAKE_SOURCE_DIR}/src/dsp/aa_window.cpp
-        ${CMAKE_SOURCE_DIR}/src/dsp/aa_mfcc.cpp
+set(DSP_SRC
+        src/dsp/aa_fft.cpp
+        third_party/kissfft/kiss_fft.c
+        third_party/kissfft/kiss_fftr.c
+        src/dsp/aa_stft.cpp
+        src/dsp/aa_window.cpp
+        src/dsp/aa_mfcc.cpp
         )
 
-add_library(libaa ${FILEIO_SRC} ${DSP_SR})
+add_library(libaa ${FILEIO_SRC} ${DSP_SRC})
 
 add_subdirectory(example)
 add_subdirectory(test)
