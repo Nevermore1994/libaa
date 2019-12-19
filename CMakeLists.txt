@@ -16,6 +16,11 @@ include_directories(third_party/dr_libs)
 include_directories(third_party/kissfft)
 include_directories(third_party/Eigen3.3.7)
 
+include(GNUInstallDirs)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR})
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR})
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR})
+
 set(FILEIO_SRC
         src/fileio/aa_wav_decoder.cpp
         src/fileio/aa_audio_file.cpp)
@@ -32,4 +37,6 @@ set(DSP_SRC
 add_library(libaa ${FILEIO_SRC} ${DSP_SRC})
 
 add_subdirectory(example)
+
+enable_testing()
 add_subdirectory(test)
