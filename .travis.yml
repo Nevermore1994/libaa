@@ -8,12 +8,8 @@ compiler:
   - clang
 
 before_script:
-  - brew update
-  - brew install python3
-  - virtualenv venv -p python3
-  - source venv/bin/activate
+  - export PATH=$HOME/Library/Python/2.7/bin:$PATH
   - pip install --user cpp-coveralls
-  - export PATH=$HOME/.local/bin:$PATH
 
 script:
   - mkdir -p build
@@ -23,4 +19,4 @@ script:
   - ctest
 
 after_success:
-  - coveralls --root .. -E ".*external.*" -E ".*CMakeFiles.*" -E ".*test/.*.cpp.*" --verbose
+  - coveralls --root .. -e third_party -E ".*external.*" -E ".*CMakeFiles.*" -E ".*test/.*.cpp.*" --verbose
