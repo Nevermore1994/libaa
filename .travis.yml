@@ -1,12 +1,17 @@
 language: cpp
-os:
-  - osx
+os: osx
+
+sudo: required
+dist: trusty
 
 compiler:
   - clang
 
 before_script:
+  - brew update
+  - brew install python3
   - pip install --user cpp-coveralls
+  - export PATH=$HOME/.local/bin:$PATH
 
 script:
   - mkdir -p build
@@ -16,4 +21,4 @@ script:
   - ctest
 
 after_success:
-  - cpp-coveralls --root .. -E ".*external.*" -E ".*CMakeFiles.*" -E ".*test/.*.cpp.*"
+  - coveralls --root .. -E ".*external.*" -E ".*CMakeFiles.*" -E ".*test/.*.cpp.*" --verbose
