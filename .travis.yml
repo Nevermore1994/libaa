@@ -10,6 +10,8 @@ compiler:
 before_script:
   - brew update
   - brew install python3
+  - virtualenv venv -p python3
+  - source venv/bin/activate
   - pip install --user cpp-coveralls
   - export PATH=$HOME/.local/bin:$PATH
 
