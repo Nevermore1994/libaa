@@ -6,7 +6,14 @@ compiler:
   - clang
 
 before_script:
-  - pip install --user cpp-coveralls
+  - brew update
+  - brew install pyenv
+  - eval "$(pyenv init -)"
+  - pyenv install 2.7.6
+  - pyenv global 2.7.6
+  - pyenv rehash
+  - pip install cpp-coveralls
+  - pyenv rehash
 
 script:
   - mkdir -p build
@@ -16,4 +23,4 @@ script:
   - ctest
 
 after_success:
-  - coveralls --root .. -E ".*external.*" -E ".*CMakeFiles.*" -E ".*test/.*.cpp.*"
+  - coveralls --exclude lib --exclude tests --gcov-options '\-lp'
