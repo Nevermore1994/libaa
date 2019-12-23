@@ -37,6 +37,7 @@ set(DSP_SRC
         src/dsp/aa_stft.cpp
         src/dsp/aa_window.cpp
         src/dsp/aa_mfcc.cpp
+        src/dsp/aa_yin.cpp
         )
 
 add_library(libaa ${FILEIO_SRC} ${DSP_SRC})
