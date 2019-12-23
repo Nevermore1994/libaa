@@ -3,6 +3,7 @@
 //
 
 #include "aa_audio_file.h"
+#include "aa_audio_decoder_factory.h"
 #include <gmock/gmock.h>
 #include <string>
 #include <fstream>
@@ -66,4 +67,29 @@ TEST_F(AAudioFile, GetAudioInfoAfterLoadSuccessfully)
     ASSERT_THAT(in_file.getNumChannels(), 2);
     ASSERT_THAT(in_file.getSampleRate(), 44100);
     ASSERT_THAT(in_file.getNumBits(), 16);
+}
+
+class ADecoderFactory : public Test
+{
+public:
+    void SetUp() override
+    {
+        support_format = AudioDecoderFactory::getSupportFormat();
+    }
+    vector<string> support_format;
+};
+
+TEST_F(ADecoderFactory, ReturnSupportedAudioFormat)
+{
+    ASSERT_THAT(support_format.size(), Gt(0));
+}
+
+TEST_F(ADecoderFactory, ReturnNullIfFileformatIsUnsupported)
+{
+    const string unsupported_filename = "abc.avi";
+
+    auto decoder = AudioDecoderFactory::createDecoder(unsupported_filename);
+
+    ASSERT_THAT(support_format, Not(Contains(unsupported_filename)));
+    ASSERT_THAT(decoder, IsNull());
 }

@@ -30,6 +30,11 @@ public:
         return nullptr;
     }
 
+    static std::vector<std::string> getSupportFormat()
+    {
+        return {"wav"};
+    }
+
     static std::unique_ptr<AudioDecoder> createWaveDecoder()
     {
         return std::make_unique<WavDecoder>();
