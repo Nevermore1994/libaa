@@ -76,39 +76,28 @@ int AudioFile::load(const std::string &filename)
         return -1;
     }
 
-    std::vector<float> fbuffer(getNumFrames() * getNumChannels());
+    // get audio information from decoder
+    num_channels_ = impl_->decoder->getNumChannels();
+    sample_rate_  = impl_->decoder->getSampleRate();
+    num_bits_     = impl_->decoder->getBits();
+    int num_frames   = impl_->decoder->getNumFrames();
+
+    std::vector<float> fbuffer(num_frames * num_channels_);
     auto num_decoded = impl_->decoder->decodeFile(fbuffer.data(), fbuffer.size());
 
     // interleave to planar
-    const int num_channels = getNumChannels();
-    samples.resize(num_channels);
-    for(auto& s : samples) {s.resize(getNumFrames());}
+    samples.resize(num_channels_);
+    for(auto& s : samples) {s.resize(num_frames);}
 
-    for(int c = 0; c < num_channels; ++c)
+    for(int c = 0; c < num_channels_; ++c)
     {
         for(int i = 0; i < num_decoded; ++i)
         {
-            samples[c][i] = fbuffer[i*num_channels + c];
+            samples[c][i] = fbuffer[i*num_channels_ + c];
         }
     }
 
     return 0;
-}
-int AudioFile::getNumChannels() const
-{
-    return impl_->decoder->getNumChannels();
-}
-int AudioFile::getSampleRate() const
-{
-    return impl_->decoder->getSampleRate();
-}
-int AudioFile::getNumBits() const
-{
-    return impl_->decoder->getBits();
-}
-int AudioFile::getNumFrames() const
-{
-    return impl_->decoder->getNumFrames();
 }
 int AudioFile::saveToWave(const std::string& save_path) const
 {
@@ -154,6 +143,13 @@ void AudioFile::setChannelData(int channel, float *data, size_t data_len)
     if(samples.size() < channel)
     {
         samples.resize(channel);
+    }
+
+    for(auto& x : samples)
+    {
+        if(x.size() < data_len) { x.resize(data_len); }
+
+        setNumFrames(data_len);
     }
 
     std::copy(data, data + data_len, samples[channel].begin());
