@@ -7,9 +7,10 @@ include_directories(${CMAKE_SOURCE_DIR}/src/fileio)
 # test dsp
 add_executable(test_dsp_main
         test_fft.cpp
-        test_stft.cpp
         test_window.cpp
         test_yin.cpp
+        test_dtw.cpp
+        test_features.cpp
         )
 target_link_libraries(test_dsp_main
         gmock_main
