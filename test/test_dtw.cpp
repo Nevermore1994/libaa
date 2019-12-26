@@ -1,6 +1,7 @@
 //
 // Created by william on 2019/12/24.
 //
+#include "aa_dtw.h"
 #include "aa_distance.h"
 #include <Eigen/Core>
 #include <iostream>
@@ -68,5 +69,54 @@ TEST_F(DistanceTest, ConsinDistance)
 
             EXPECT_THAT(D(i, j), FloatNear(dist, 1e-6));
         }
+    }
+}
+
+class ADTWTest : public Test
+{
+public:
+
+    void SetUp() override
+    {
+        X.resize(2, 5);
+        X << 1,2,3,4,5,
+             1,2,3,4,5;
+
+        Y.resize(2, 5);
+        Y << 1,2,3,4,5,
+             1,2,3,4,5;
+
+        D = Distance::calcDistance(X, Y, DistanceType::kEuclidean);
+    }
+
+    ArrayXXf X;
+    ArrayXXf Y;
+    ArrayXXf D;
+};
+
+
+
+TEST_F(ADTWTest, DTWWindowSizeEqMutipleOfInputLength)
+{
+    int len_x = 3;
+    int len_y = 4;
+
+    auto path = DTW::getWindowIndex(len_x, len_y);
+
+    ASSERT_THAT(path.size(), Eq(len_x * len_y));
+
+}
+
+TEST_F(ADTWTest, TestFinalDistance)
+{
+    auto result = DTW::dtw(D);
+
+    float final_dist = get<0>(result);
+    DTW::Path  path = get<1>(result);
+
+    EXPECT_THAT(final_dist, FloatEq(0));
+    for(auto x : path)
+    {
+        EXPECT_THAT(x.first, Eq(x.second));
     }
 }

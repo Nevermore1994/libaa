@@ -39,6 +39,7 @@ set(DSP_SRC
         src/dsp/aa_mfcc.cpp
         src/dsp/aa_yin.cpp
         src/dsp/aa_distance.cpp
+        src/dsp/aa_dtw.cpp
         )
 
 add_library(libaa ${FILEIO_SRC} ${DSP_SRC})
