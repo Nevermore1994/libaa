@@ -83,7 +83,7 @@ int AudioFile::load(const std::string &filename)
     int num_frames   = impl_->decoder->getNumFrames();
 
     std::vector<float> fbuffer(num_frames * num_channels_);
-    auto num_decoded = impl_->decoder->decodeFile(fbuffer.data(), fbuffer.size());
+    auto num_decoded = impl_->decoder->read(fbuffer.data(), fbuffer.size());
 
     // interleave to planar
     samples.resize(num_channels_);

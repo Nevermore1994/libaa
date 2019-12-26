@@ -28,14 +28,6 @@ public:
      */
     virtual int read(float* buffer, size_t size) = 0;
 
-    /**
-     * decode whole file
-     * @param buffer pre-alloc buffer to hold whole file samples
-     * @param size total pcm samples, equals getNumFrames()*getNumChannels()
-     * @return number of decoded samples
-     */
-    virtual int decodeFile(float* buffer, size_t size) = 0;
-
     std::vector<float> read(size_t size)
     {
         std::vector<float> result(size);

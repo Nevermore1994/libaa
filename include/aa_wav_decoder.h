@@ -14,7 +14,6 @@ public:
     virtual ~WavDecoder() = default;
     int open(const std::string& filename) override;
     int read(float *buffer, size_t size) override;
-    int decodeFile(float *buffer, size_t size) override;
 private:
     class Impl;
     std::shared_ptr<Impl> impl_;

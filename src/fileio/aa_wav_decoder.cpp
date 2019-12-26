@@ -47,19 +47,5 @@ int WavDecoder::read(float *buffer, size_t size)
 
     return num_readed;
 }
-int WavDecoder::decodeFile(float *buffer, size_t size)
-{
-    const auto total_samples = num_channels_ * num_frames_;
-    if(size < total_samples)
-    {
-        std::cerr << "The total samples is " << total_samples
-                  << ", the buffer length " << size << " is not enough\n";
-        return -1;
-    }
-    size_t number_samples_acctually_decoded =drwav_read_pcm_frames_f32(
-        &impl_->wav, getNumFrames(), buffer);
-
-    return number_samples_acctually_decoded;
-}
 
 }
