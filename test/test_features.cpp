@@ -6,6 +6,7 @@
 #include "aa_stft.h"
 #include "aa_test_helper.h"
 #include "aa_window.h"
+#include "aa_mfcc.h"
 #include <gmock/gmock.h>
 #include <Eigen/Core>
 #include <vector>
@@ -77,4 +78,21 @@ TEST_F(ASTFT, SlideWindowWithHopSize)
         ++frame_idx;
     }
 
+}
+
+TEST(MFCCTest, OutputSize)
+{
+    const int data_length = 2048;
+    const int sample_rate = 44100;
+    ArrayXf input_data = ArrayXf::Random(data_length);
+
+    Options opts;
+    opts.n_mels = 88;
+    opts.n_mfcc = 22;
+    opts.hop_size = 128;
+
+    ArrayXXf mfccs = MFCC::mfcc(input_data.data(), input_data.size(), sample_rate, opts);
+
+    EXPECT_THAT(mfccs.rows(), Eq(opts.n_mfcc));
+    EXPECT_THAT(mfccs.cols(), Eq(data_length / opts.hop_size));
 }
