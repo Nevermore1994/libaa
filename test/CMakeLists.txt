@@ -11,6 +11,7 @@ add_executable(test_dsp_main
         test_yin.cpp
         test_dtw.cpp
         test_features.cpp
+        test_delay_line.cpp
         )
 target_link_libraries(test_dsp_main
         gmock_main
