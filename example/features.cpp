@@ -2,9 +2,9 @@
 // Created by william on 2019/12/15.
 //
 
-#include "aa_options.h"
-#include "aa_audio_file.h"
-#include "aa_mfcc.h"
+#include "dsp/aa_options.h"
+#include "fileio/aa_audio_file.h"
+#include "dsp/aa_mfcc.h"
 #include <iostream>
 #include <Eigen/Core>
 

@@ -2,8 +2,8 @@
 // Created by william on 2019/12/11.
 //
 
-#include "aa_window.h"
-#include "aa_stft.h"
+#include "dsp/aa_window.h"
+#include "dsp/aa_stft.h"
 #include "aa_dsp_help_func.h"
 
 namespace libaa

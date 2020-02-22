@@ -2,11 +2,11 @@
 // Created by william on 2019/12/24.
 //
 
-#include "aa_fft.h"
-#include "aa_stft.h"
+#include "dsp/aa_fft.h"
+#include "dsp/aa_stft.h"
 #include "aa_test_helper.h"
-#include "aa_window.h"
-#include "aa_mfcc.h"
+#include "dsp/aa_window.h"
+#include "dsp/aa_mfcc.h"
 #include <gmock/gmock.h>
 #include <Eigen/Core>
 #include <vector>

@@ -2,7 +2,7 @@
 // Created by william on 2019/12/16.
 //
 
-#include "aa_yin.h"
+#include "dsp/aa_yin.h"
 #include <gmock/gmock.h>
 #include <vector>
 #include <Eigen/Core>

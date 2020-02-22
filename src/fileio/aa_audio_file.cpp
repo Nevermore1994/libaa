@@ -3,8 +3,8 @@
 //
 
 #include "dr_wav.h"
-#include "aa_audio_file.h"
-#include "aa_wav_decoder.h"
+#include "fileio/aa_audio_file.h"
+#include "fileio/aa_wav_decoder.h"
 #include "aa_audio_decoder_factory.h"
 #include <iostream>
 
