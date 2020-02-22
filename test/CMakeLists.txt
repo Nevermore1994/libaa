@@ -12,6 +12,7 @@ add_executable(test_dsp_main
         test_dtw.cpp
         test_features.cpp
         test_delay_line.cpp
+        test_audio_buffer.cpp
         )
 target_link_libraries(test_dsp_main
         gmock_main
