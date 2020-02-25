@@ -2,7 +2,7 @@
 // Created by william on 2020/2/20.
 //
 
-#include "audio_effect/aa_delay_line.h"
+#include "audio_basics/aa_delay_line.h"
 #include <gmock/gmock.h>
 using namespace testing;
 using namespace libaa;
@@ -60,4 +60,15 @@ TEST_F(ADelayLine, GetDelayedValue)
     size_t delay_in_sample = 5;
 
     ASSERT_THAT(dline.get(delay_in_sample), FloatEq(target_size - delay_in_sample - 1));
+}
+
+TEST_F(ADelayLine, SetAllValueToZeroAfterClear)
+{
+    int target_size = 10;
+    dline.resize(target_size);
+    dline.push(1.0);
+
+    dline.clear();
+
+    ASSERT_THAT(dline.back(), FloatEq(0.0f));
 }
