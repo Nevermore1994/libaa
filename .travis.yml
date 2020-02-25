@@ -17,6 +17,7 @@ script:
   - cmake -DCOVERAGE=ON ..
   - cmake --build . -j 4
   - ctest
+  - cd ..
   - chmod +x ./run_example.sh
   - ./run_example.sh
 
