@@ -52,7 +52,7 @@ Eigen::ArrayXf Window::windowSum(WindowType win_type, size_t n_frames, size_t wi
     return x;
 }
 
-Eigen::ArrayXf Window::getWindow(WindowType win_type, size_t win_size)
+Eigen::ArrayXf Window::getWindow(WindowType win_type, size_t win_size, bool symmetry)
 {
     std::function<float(int,int)> win_func = hammingAtPoint;
 
@@ -82,9 +82,11 @@ Eigen::ArrayXf Window::getWindow(WindowType win_type, size_t win_size)
     }
 
     Eigen::VectorXf window(win_size);
+    size_t num_sample = symmetry ? win_size : win_size + 1;
+
     for(int i = 0; i < win_size; ++i)
     {
-        window(i) = win_func(i, win_size);
+        window(i) = win_func(i, num_sample);
     }
 
     return window;

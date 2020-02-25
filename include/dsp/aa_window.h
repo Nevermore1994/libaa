@@ -13,7 +13,7 @@ public:
     /**
      * Returns a window of a given length and type.
      */
-    static Eigen::ArrayXf getWindow(WindowType win_type, size_t win_size);
+    static Eigen::ArrayXf getWindow(WindowType win_type, size_t win_size, bool symmetry = true);
 
     /**
      * Returns a overlap window sum.

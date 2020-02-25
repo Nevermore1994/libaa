@@ -3,7 +3,7 @@
 //
 
 #include "fileio/aa_audio_file.h"
-#include "aa_audio_decoder_factory.h"
+#include "fileio/aa_audio_decoder_factory.h"
 #include <gmock/gmock.h>
 #include <string>
 #include <fstream>
