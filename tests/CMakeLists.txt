@@ -13,12 +13,14 @@ add_executable(unit_test
         test_dtw.cpp
         test_features.cpp
         test_delay_line.cpp
+        test_lfo.cpp
 
         # audio basics
         test_audio_buffer.cpp
 
         # fileio
         test_audio_file.cpp
+
         )
 target_link_libraries(unit_test
         gmock_main

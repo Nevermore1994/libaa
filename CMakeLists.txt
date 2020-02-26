@@ -40,6 +40,7 @@ set(DSP_SRC
         src/dsp/aa_yin.cpp
         src/dsp/aa_distance.cpp
         src/dsp/aa_dtw.cpp
+        src/dsp/aa_lfo.cpp
         )
 
 set(AUDIO_EFFECT_DIR
@@ -47,7 +48,7 @@ set(AUDIO_EFFECT_DIR
 
 add_library(libaa ${FILEIO_SRC} ${DSP_SRC} ${AUDIO_EFFECT_DIR})
 
-add_subdirectory(example)
+add_subdirectory(examples)
 
 enable_testing()
-add_subdirectory(test)
+add_subdirectory(tests)
