@@ -6,6 +6,7 @@
 #include "fileio/aa_audio_file.h"
 #include "audio_basics/aa_audio_buffer.h"
 #include "audio_effect/aa_delay_effect.h"
+#include "audio_effect/aa_vibrato_effect.h"
 #include <iostream>
 using namespace std;
 using namespace libaa;
@@ -30,7 +31,8 @@ int main(int argc, char* argv[])
     int sample_index = 0;
     int acctual_block_size = 0;
 
-    DelayEffect processor;
+    VibratoEffect processor;
+    processor.setRateAndBufferSizeDetails(audio_file.getSampleRate(), predefine_block_size);
     processor.prepareToPlay(audio_file.getSampleRate(), predefine_block_size);
 
     for(;sample_index < num_frames;)

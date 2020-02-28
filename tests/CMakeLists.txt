@@ -21,6 +21,8 @@ add_executable(unit_test
         # fileio
         test_audio_file.cpp
 
+        # audio effect
+        test_audio_effect.cpp
         )
 target_link_libraries(unit_test
         gmock_main

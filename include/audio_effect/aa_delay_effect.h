@@ -7,7 +7,7 @@
 #include "audio_basics/aa_delay_line.h"
 namespace libaa
 {
-class DelayEffect : public AudoEffectProcessor
+class DelayEffect : public AudioEffectProcessor
 {
 public:
     DelayEffect()= default;
