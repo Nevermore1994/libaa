@@ -39,10 +39,9 @@ void VibratoEffect::processBlock(AudioBuffer<float> &buffer) {
             // get delay from lfo
             float delay_second = sweep_width*lfo_.lfo(phase, LFO::WaveformType::kWaveformSine);
             int delay_sample = delay_second * getSampleRate();
-            int nearest_int_delay = static_cast<int>(std::floorf((delay_sample + 0.5f)));
 
-            // use nearest sample as output
-            channel_data[i] = dline.get(nearest_int_delay);
+            // get interpolation delay value
+            channel_data[i] = dline.getInterpolation(delay_sample);
 
             // push input to delay line
             dline.push(in);
