@@ -72,3 +72,14 @@ TEST_F(ADelayLine, SetAllValueToZeroAfterClear)
 
     ASSERT_THAT(dline.back(), FloatEq(0.0f));
 }
+
+TEST_F(ADelayLine, RetrunsInterpolatonValueIfDelayIsFloat)
+{
+    int target_size = 10;
+    dline.resize(target_size);
+    for(int i = 0; i < target_size; ++i){ dline.push(float(i)); }
+
+    float delay = 2.5;
+
+    ASSERT_THAT(dline.getInterpolation(delay), FloatEq(6.5f));
+}

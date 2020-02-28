@@ -5,6 +5,7 @@
 #pragma once
 
 #include <vector>
+#include <cmath>
 
 namespace libaa
 {
@@ -60,6 +61,18 @@ public:
     T get(size_t delay_in_samples) const noexcept
     {
         return raw_data_[(least_recent_index_ + 1 + delay_in_samples) % size()];
+    }
+
+    /**
+     * Returns interpolation value
+     */
+    T getInterpolation(float delay) const noexcept
+    {
+        int previous_sample = static_cast<int>(std::floorf(delay));
+        int next_sample = static_cast<int>(std::ceilf(delay));
+        float fraction = static_cast<float>(next_sample) - delay;
+
+        return fraction*get(previous_sample) + (1.0f-fraction)*get(next_sample);
     }
 
     /**
