@@ -3,23 +3,50 @@
 //
 
 #include "audio_effect/aa_vibrato_effect.h"
+#include "audio_effect/aa_delay_effect.h"
 #include <gmock/gmock.h>
 
 using namespace std;
 using namespace libaa;
+using namespace testing;
 
-
-TEST(AVibratoEffect, test)
+class AudioEffectTest : public Test
 {
+public:
+    void SetUp() override
+    {
+        left_data.resize(sample_rate*2, 1.0f);
+        right_data.resize(sample_rate*2, 1.0f);
+
+        data_refer_to[0] = left_data.data();
+        data_refer_to[1] = right_data.data();
+
+        block = AudioBuffer<float>(data_refer_to,2,0,left_data.size() );
+    }
     int sample_rate = 44100;
     int block_size = 1024;
+
+    vector<float> left_data;
+    vector<float> right_data;
+    float* data_refer_to[2];
+    AudioBuffer<float> block;
+
+};
+
+TEST_F(AudioEffectTest, DelayTest)
+{
+    DelayEffect delay;
+    delay.setRateAndBufferSizeDetails(sample_rate, block_size);
+    delay.prepareToPlay(sample_rate, block_size);
+
+    delay.processBlock(block);
+}
+
+TEST_F(AudioEffectTest, VibratoTest)
+{
     VibratoEffect vibrato;
+    vibrato.setRateAndBufferSizeDetails(sample_rate, block_size);
     vibrato.prepareToPlay(sample_rate, block_size);
 
-    vector<float> left_data(44100*10, 1.0f);
-    vector<float> right_data(44100*10, 1.0f);
-    float* data_refer_to[2] = {left_data.data(), right_data.data()};
-    AudioBuffer<float> test_data(data_refer_to,2,0,left_data.size() );
-
-    vibrato.processBlock(test_data);
+    vibrato.processBlock(block);
 }
