@@ -19,4 +19,4 @@ script:
   - ctest
 
 after_success:
-  - coveralls --root .. -e third_party -e example -E ".*external.*" -E ".*CMakeFiles.*" -E ".*test/.*.cpp.*" --verbose
+  - coveralls --root .. -e third_party -e examples -E ".*external.*" -E ".*CMakeFiles.*" -E ".*tests/.*.cpp.*" --verbose
