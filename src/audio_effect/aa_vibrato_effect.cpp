@@ -39,7 +39,7 @@ void VibratoEffect::processBlock(AudioBuffer<float> &buffer) {
 
             // get delay from lfo
             float delay_second = sweep_width*lfo_.lfo(phase, LFO::WaveformType::kWaveformSine);
-            int delay_sample = delay_second * getSampleRate();
+            float delay_sample = delay_second * getSampleRate();
 
             // get interpolation delay value
             channel_data[i] = dline.getInterpolation(delay_sample);
