@@ -23,12 +23,13 @@ void VibratoEffect::prepareToPlay(double sample_rate, int samplers_per_block)
 void VibratoEffect::processBlock(AudioBuffer<float> &buffer) {
     const int num_channels = buffer.getNumChannels();
     const int num_samples = buffer.getNumSamples();
-    float phase = phase_;
+    float phase = 0.0f;
 
     assert(num_channels <= dlines_.size());
 
     for(int c = 0; c < num_channels; ++c)
     {
+        phase = phase_;
         float* channel_data = buffer.getWritePointer(c);
         auto& dline = dlines_[c];
 
