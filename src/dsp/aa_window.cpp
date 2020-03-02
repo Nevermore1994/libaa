@@ -42,7 +42,7 @@ std::vector<float> Window::windowSum(WindowType win_type, size_t n_frames, size_
     size_t n = (n_frames - 1) * hop_size + win_size;
     std::vector<float> x(n, 0.0f);
 
-    std::vector<float> w = Window::getWindowX(win_type, win_size);
+    std::vector<float> w = Window::getWindow(win_type, win_size);
 
     for(int i = 0;i < n_frames; ++i)
     {
@@ -57,7 +57,7 @@ std::vector<float> Window::windowSum(WindowType win_type, size_t n_frames, size_
     return x;
 }
 
-std::vector<float> Window::getWindowX(WindowType win_type, size_t win_size, bool symmetry)
+std::vector<float> Window::getWindow(WindowType win_type, size_t win_size, bool symmetry)
 {
     std::function<float(int,int)> win_func = hammingAtPoint;
 

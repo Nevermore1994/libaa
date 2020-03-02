@@ -54,7 +54,7 @@ TEST_F(ASTFT, SlideWindowWithHopSize)
 
     int idx = 0;
     int frame_idx = 0;
-    std::vector<float> w = Window::getWindowX(opts.win_type, win_size);
+    std::vector<float> w = Window::getWindow(opts.win_type, win_size);
     Eigen::Map<Eigen::ArrayXf> window(w.data(), w.size());
 
     for(;idx < fake_data.size() - hop_size;)

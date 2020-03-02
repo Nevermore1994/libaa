@@ -12,7 +12,7 @@ using namespace libaa;
 TEST(GetWindow, returnsWindowWithWinSize)
 {
     const int win_size = 512;
-    std::vector<float> window = Window::getWindowX(WindowType::kRectangle, win_size);
+    std::vector<float> window = Window::getWindow(WindowType::kRectangle, win_size);
 
     ASSERT_THAT(window.size(), Eq(win_size));
     ASSERT_THAT(window, ContainerEq(vector<float>(win_size, 1.0f)));

@@ -13,7 +13,7 @@ public:
     /**
      * Returns a window of a given length and type.
      */
-    static std::vector<float> getWindowX(WindowType win_type, size_t win_size, bool symmetry = true);
+    static std::vector<float> getWindow(WindowType win_type, size_t win_size, bool symmetry = true);
 
     /**
      * Returns a overlap window sum.
