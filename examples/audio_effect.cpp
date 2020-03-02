@@ -14,7 +14,7 @@ using namespace libaa;
 
 int main(int argc, char* argv[])
 {
-    const string input_filename = "../../res/wav/english_voice_test.wav";
+    const string input_filename = "../../res/wav/1kHz_0dB_48k_i16.wav";
     string output_filename = "audio_effect_result.wav";
 
     AudioFile audio_file;
@@ -34,6 +34,8 @@ int main(int argc, char* argv[])
     VibratoEffect processor;
     processor.setRateAndBufferSizeDetails(audio_file.getSampleRate(), predefine_block_size);
     processor.prepareToPlay(audio_file.getSampleRate(), predefine_block_size);
+    processor.lfo_freq = 1;
+//    processor.feedback_ = 0.95f;
 
     for(;sample_index < num_frames;)
     {

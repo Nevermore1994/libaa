@@ -4,6 +4,7 @@
 
 #include "dsp/aa_window.h"
 #include <functional>
+#include <math.h>
 
 namespace libaa
 {
@@ -36,29 +37,33 @@ float hanningAtPoint(float point, int numSamples){
     return 0.5f * ( 1.0f - cosf ( (2.0f * M_PI * point) / ( (float)numSamples - 1.0f) ) );
 }
 
-Eigen::ArrayXf Window::windowSum(WindowType win_type, size_t n_frames, size_t win_size, size_t hop_size)
+std::vector<float> Window::windowSum(WindowType win_type, size_t n_frames, size_t win_size, size_t hop_size)
 {
     size_t n = (n_frames - 1) * hop_size + win_size;
-    Eigen::ArrayXf x(n);
+    std::vector<float> x(n, 0.0f);
 
-    Eigen::ArrayXf window = getWindow(win_type, win_size).array();
+    std::vector<float> w = Window::getWindowX(win_type, win_size);
 
     for(int i = 0;i < n_frames; ++i)
     {
         const int overlap_add_i = i * hop_size;
-        x.segment(overlap_add_i, win_size) += window;
+
+        for(int j = 0; j < win_size; ++j)
+        {
+            x[overlap_add_i + j] += w[j];
+        }
     }
 
     return x;
 }
 
-Eigen::ArrayXf Window::getWindow(WindowType win_type, size_t win_size, bool symmetry)
+std::vector<float> Window::getWindowX(WindowType win_type, size_t win_size, bool symmetry)
 {
     std::function<float(int,int)> win_func = hammingAtPoint;
 
     if(win_type == WindowType::kRectangle)
     {
-        return Eigen::VectorXf::Ones(win_size);
+        return std::vector<float>(win_size, 1.0f);
     }
     else if(win_type == WindowType::kHann)
     {
@@ -81,12 +86,12 @@ Eigen::ArrayXf Window::getWindow(WindowType win_type, size_t win_size, bool symm
         win_func = blackmanHarrisAtPoint;
     }
 
-    Eigen::VectorXf window(win_size);
+    std::vector<float> window(win_size);
     size_t num_sample = symmetry ? win_size : win_size + 1;
 
     for(int i = 0; i < win_size; ++i)
     {
-        window(i) = win_func(i, num_sample);
+        window[i] = win_func(i, num_sample);
     }
 
     return window;

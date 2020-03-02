@@ -4,14 +4,16 @@
 #include "dsp/aa_window.h"
 #include <gmock/gmock.h>
 #include <Eigen/Core>
+#include <vector>
+using namespace std;
 using namespace testing;
 using namespace libaa;
 
 TEST(GetWindow, returnsWindowWithWinSize)
 {
     const int win_size = 512;
-    Eigen::VectorXf window = Window::getWindow(WindowType::kRectangle, win_size);
+    std::vector<float> window = Window::getWindowX(WindowType::kRectangle, win_size);
 
     ASSERT_THAT(window.size(), Eq(win_size));
-    ASSERT_THAT(window, Eq(Eigen::VectorXf::Ones(win_size)));
+    ASSERT_THAT(window, ContainerEq(vector<float>(win_size, 1.0f)));
 }

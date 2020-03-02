@@ -28,7 +28,8 @@ Eigen::ArrayXXcf STFT::stft(const float* data, size_t data_len, const Options& o
 
     FFT fft(opts.win_size);
     int idx = 0;
-    Eigen::ArrayXf window = Window::getWindow(opts.win_type, opts.win_size);
+    std::vector<float> w = Window::getWindowX(opts.win_type, opts.win_size);
+    Eigen::Map<Eigen::ArrayXf> window(w.data(), w.size());
 
     for(;idx < data_len - opts.hop_size;)
     {
@@ -71,7 +72,9 @@ Eigen::ArrayXf STFT::istft(const Eigen::MatrixXcf& S, const Options& opts)
         freq_data += S.rows();
     }
 
-    Eigen::ArrayXf window_sum = Window::windowSum(opts.win_type, n_frames, opts.win_size, opts.hop_size);
+    auto w_sum = Window::windowSum(opts.win_type, n_frames, opts.win_size, opts.hop_size);
+    Eigen::Map<Eigen::ArrayXf> window_sum(w_sum.data(), w_sum.size());
+
     window_sum = (window_sum < 1e-6).select(1, window_sum);
     output /= window_sum;
 
