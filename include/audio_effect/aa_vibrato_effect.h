@@ -14,6 +14,7 @@ namespace libaa
 class VibratoEffect : public AudioEffectProcessor
 {
 public:
+    VibratoEffect();
     std::string getName() const override {
         return std::string("vibrato");
     }
@@ -29,9 +30,8 @@ public:
     float sweep_width = 0.01f;
 
 private:
-    float phase_={0.0f};
-    float invert_sample_rate_{0.0f};
-    LFO lfo_;
-    std::vector<DelayLine<float>> dlines_;
+    class Impl;
+    std::shared_ptr<Impl> impl_;
+
 };
 }
