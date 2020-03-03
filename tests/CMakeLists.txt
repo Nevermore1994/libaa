@@ -12,11 +12,12 @@ add_executable(unit_test
         test_yin.cpp
         test_dtw.cpp
         test_features.cpp
-        test_delay_line.cpp
         test_lfo.cpp
 
         # audio basics
         test_audio_buffer.cpp
+        test_delay_line.cpp
+        test_delay_line_array.cpp
 
         # fileio
         test_audio_file.cpp

@@ -11,19 +11,26 @@ template <typename T>
 class DelayLineArray
 {
 public:
+    DelayLineArray() = default;
+
     DelayLineArray(size_t num_lines, size_t line_size)
     {
-        dlines_.resize(num_lines);
-
-        for(auto& dline : dlines_)
-        {
-            dline.resize(line_size);
-        }
+        allocateDelayLines(num_lines, line_size);
     }
 
     size_t getNumLines() const
     {
         return dlines_.size();
+    }
+
+    void allocateDelayLines(size_t num_lines, size_t size)
+    {
+        dlines_.resize(num_lines);
+
+        for(auto& dline : dlines_)
+        {
+            dline.resize(size);
+        }
     }
 
     size_t getSize() const

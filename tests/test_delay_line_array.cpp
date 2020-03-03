@@ -60,3 +60,13 @@ TEST_F(ADelayLineArray, ResizeAllDelayLines)
 
     ASSERT_THAT(dline->size(), Eq(new_size));
 }
+
+TEST_F(ADelayLineArray, AllocateNewLines)
+{
+    size_t new_num_lines = 10;
+    size_t new_size = 10;
+    dlines.allocateDelayLines(new_num_lines, new_size);
+
+    ASSERT_THAT(dlines.getNumLines(), Eq(new_num_lines));
+    ASSERT_THAT(dlines.getSize(), Eq(new_size));
+}

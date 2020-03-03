@@ -10,7 +10,7 @@ namespace libaa
 class DelayEffect : public AudioEffectProcessor
 {
 public:
-    DelayEffect()= default;
+    DelayEffect();
 
     std::string getName() const override
     {
@@ -31,8 +31,8 @@ public:
     float wet_mix_ = 0.2;
 
 private:
-    std::vector<DelayLine<float>> dlines_;
-    std::vector<size_t> delay_length_in_sample_;
+    class Impl;
+    std::shared_ptr<Impl> impl_;
 };
 
 }
