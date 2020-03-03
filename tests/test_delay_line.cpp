@@ -3,6 +3,7 @@
 //
 
 #include "audio_basics/aa_delay_line.h"
+#include "audio_basics/aa_delay_line_array.h"
 #include <gmock/gmock.h>
 using namespace testing;
 using namespace libaa;
@@ -83,3 +84,6 @@ TEST_F(ADelayLine, RetrunsInterpolatonValueIfDelayIsFloat)
 
     ASSERT_THAT(dline.getInterpolation(delay), FloatEq(6.5f));
 }
+
+
+
