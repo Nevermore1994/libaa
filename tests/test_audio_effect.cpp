@@ -4,6 +4,8 @@
 
 #include "audio_effect/aa_vibrato_effect.h"
 #include "audio_effect/aa_delay_effect.h"
+#include "audio_basics/aa_delay_line_array.h"
+#include "audio_effect/aa_flanger.h"
 #include <gmock/gmock.h>
 
 using namespace std;
@@ -33,20 +35,36 @@ public:
 
 };
 
+
 TEST_F(AudioEffectTest, DelayTest)
 {
-    DelayEffect delay;
-    delay.setRateAndBufferSizeDetails(sample_rate, block_size);
-    delay.prepareToPlay(sample_rate, block_size);
+    DelayEffect processor;
+    processor.setRateAndBufferSizeDetails(sample_rate, block_size);
+    processor.prepareToPlay(sample_rate, block_size);
 
-    delay.processBlock(block);
+    processor.processBlock(block);
+    processor.reset();
+    processor.releaseResources();
 }
 
 TEST_F(AudioEffectTest, VibratoTest)
 {
-    VibratoEffect vibrato;
-    vibrato.setRateAndBufferSizeDetails(sample_rate, block_size);
-    vibrato.prepareToPlay(sample_rate, block_size);
+    VibratoEffect processor;
+    processor.setRateAndBufferSizeDetails(sample_rate, block_size);
+    processor.prepareToPlay(sample_rate, block_size);
 
-    vibrato.processBlock(block);
+    processor.processBlock(block);
+    processor.reset();
+    processor.releaseResources();
+}
+
+TEST_F(AudioEffectTest, FlangerTest)
+{
+    Flanger processor;
+    processor.setRateAndBufferSizeDetails(sample_rate, block_size);
+    processor.prepareToPlay(sample_rate, block_size);
+
+    processor.processBlock(block);
+    processor.reset();
+    processor.releaseResources();
 }
