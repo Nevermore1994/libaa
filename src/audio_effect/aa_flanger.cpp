@@ -46,12 +46,18 @@ void Flanger::processBlock(AudioBuffer<float> &buffer)
     const int num_channels = buffer.getNumChannels();
     const int num_samples = buffer.getNumSamples();
     float phase = 0.0f;
+    float channel0EndPhase = impl_->phase_;
 
     assert(num_channels <= impl_->dlines_.getNumLines());
 
     for(int c = 0; c < num_channels; ++c)
     {
         phase = impl_->phase_;
+        if(stereo != 0 && c != 0)
+        {
+            phase = fmodf(phase + 0.25f, 1.0f);
+        }
+
         float* channel_data = buffer.getWritePointer(c);
         auto* dline = impl_->dlines_.getDelayLine(c);
 
@@ -59,27 +65,33 @@ void Flanger::processBlock(AudioBuffer<float> &buffer)
         {
             const float in = channel_data[i];
 
-// get delay from lfo
-            float delay_second = sweep_width*impl_->lfo_.lfo(phase, LFO::WaveformType::kWaveformSine);
-            float delay_sample = delay_second * getSampleRate();
+            // get delay from lfo
+            float delay_second = min_delay + sweep_width*impl_->lfo_.lfo(phase, LFO::WaveformType::kWaveformSine);
+            float delay_sample = delay_second * static_cast<float>(getSampleRate());
 
-// get interpolation delay value
+            // get interpolation delay value
             float interpolation_val = dline->getInterpolation(delay_sample);
             channel_data[i] = in + depth * interpolation_val;
 
-// push input to delay line
+            // push input to delay line
             dline->push(in + (interpolation_val * feedback));
 
-// update phase
+            // update phase
             phase += lfo_freq*impl_->invert_sample_rate_;
             if(phase >= 1.0f)
             {
                 phase -= 1.0f;
             }
         }
+
+        // use channel 0 only keep the phase in sync between call processBlock()
+        if(c == 0)
+        {
+            channel0EndPhase = phase;
+        }
     }
 
-    impl_->phase_ = phase;
+    impl_->phase_ = channel0EndPhase;
 }
 
 }

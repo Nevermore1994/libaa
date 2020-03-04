@@ -19,10 +19,12 @@ public:
     void releaseResources() override;
     void processBlock(AudioBuffer<float> &buffer) override;
 
-    float lfo_freq = 6;     // frequency fo the lfo
-    float sweep_width = 0.1; // widht of the lfo samples
-    float depth = 0.5;       // amount o delayed signal mixed with original (0,1)
-    float feedback = 0.8;    // amount of feedback
+    float lfo_freq    = 1;        // frequency fo the lfo
+    float sweep_width = 0.003;    // width of the lfo samples
+    float depth       = 1.0;      // amount o delayed signal mixed with original (0,1)
+    float feedback    = 0.3;      // amount of feedback (0, 1)
+    float min_delay   = 0.001;    // minimum length of delay line in seconds
+    int stereo        = 1;        // whether to use stereo flanging
 
 private:
     class Impl;
