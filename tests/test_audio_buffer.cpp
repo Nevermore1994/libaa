@@ -21,7 +21,6 @@ public:
     }
     constexpr static int num_samples = 512;
     constexpr static int num_channels = 2;
-    AudioBuffer<float> empty_buffer;
     float left_data[num_samples];
     float right_data[num_samples];
 
@@ -29,24 +28,33 @@ public:
 
 TEST_F(AAudioBuffer, CreatAnEmptyBuffer)
 {
-    EXPECT_THAT(empty_buffer.getNumSamples(), Eq(0));
-    EXPECT_THAT(empty_buffer.getNumChannels(), Eq(0));
+    AudioBuffer<float> empty_buffer;
+
+    int samples = empty_buffer.getNumSamples();
+    int channels = empty_buffer.getNumChannels();
+    EXPECT_THAT(samples, Eq(0));
+    EXPECT_THAT(channels, Eq(0));
 }
 
 TEST_F(AAudioBuffer, CreatAnEmptyBufferWithSizeAndNumChannels)
 {
     AudioBuffer<float> buffer(num_channels, num_samples);
 
-    EXPECT_THAT(buffer.getNumSamples(), Eq(num_samples));
-    EXPECT_THAT(buffer.getNumChannels(), Eq(num_channels));
+    int samples = buffer.getNumSamples();
+    int channels = buffer.getNumChannels();
+
+    EXPECT_THAT(samples, Eq(num_samples));
+    EXPECT_THAT(channels, Eq(num_channels));
 }
 
 TEST_F(AAudioBuffer, AllocMemoryWhenCreateWithSize)
 {
     AudioBuffer<float> buffer(num_channels, num_samples);
 
-    ASSERT_THAT(buffer.getWritePointer(0), Not(nullptr));
-    ASSERT_THAT(buffer.getReadPointer(0), Not(nullptr));
+    float* wp = buffer.getWritePointer(0);
+    const float* rp = buffer.getReadPointer(0);
+    ASSERT_THAT(wp, Not(nullptr));
+    ASSERT_THAT(rp, Not(nullptr));
 }
 
 TEST_F(AAudioBuffer, CreateWithDataReferTo)
