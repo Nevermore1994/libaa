@@ -34,7 +34,7 @@ void VibratoEffect::processBlock(AudioBuffer<float> &buffer) {
     const int num_samples = buffer.getNumSamples();
     float phase = 0.0f;
 
-    assert(num_channels <= impl_->dlines_.getNumLines());
+    assert(static_cast<size_t>(num_channels) <= impl_->dlines_.getNumLines());
 
     for(int c = 0; c < num_channels; ++c)
     {

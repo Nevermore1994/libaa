@@ -44,11 +44,11 @@ std::vector<float> Window::windowSum(WindowType win_type, size_t n_frames, size_
 
     std::vector<float> w = Window::getWindow(win_type, win_size);
 
-    for(int i = 0;i < n_frames; ++i)
+    for(size_t i = 0;i < n_frames; ++i)
     {
         const int overlap_add_i = i * hop_size;
 
-        for(int j = 0; j < win_size; ++j)
+        for(size_t j = 0; j < win_size; ++j)
         {
             x[overlap_add_i + j] += w[j];
         }
@@ -89,7 +89,7 @@ std::vector<float> Window::getWindow(WindowType win_type, size_t win_size, bool 
     std::vector<float> window(win_size);
     size_t num_sample = symmetry ? win_size : win_size + 1;
 
-    for(int i = 0; i < win_size; ++i)
+    for(size_t i = 0; i < win_size; ++i)
     {
         window[i] = win_func(i, num_sample);
     }

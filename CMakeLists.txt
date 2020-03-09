@@ -6,8 +6,15 @@ set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -stdlib=libc++ -lc++abi")
 
 
-# must return type
+# must return value if you define non-void function
 add_compile_options(-Werror=return-type)
+
+# warning as error
+if(MSVC)
+    add_compile_options(/W4 /WX)
+else()
+    add_compile_options(-Wall -Wextra -pedantic -Werror -Wno-unused-function -Wno-unused-parameter)
+endif()
 
 add_subdirectory(third_party)
 

@@ -23,7 +23,7 @@ public:
 
     int saveToWave(const std::string& save_path) const;
 
-    void setChannelData(int channel, float* data, size_t data_len);
+    void setChannelData(size_t channel, float* data, size_t data_len);
     std::vector<std::vector<float>> samples;
 
 public:

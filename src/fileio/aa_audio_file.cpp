@@ -89,7 +89,7 @@ int AudioFile::load(const std::string &filename)
     samples.resize(num_channels_);
     for(auto& s : samples) {s.resize(num_frames);}
 
-    for(int c = 0; c < num_channels_; ++c)
+    for(size_t c = 0; c < num_channels_; ++c)
     {
         for(int i = 0; i < num_decoded; ++i)
         {
@@ -113,9 +113,9 @@ int AudioFile::saveToWave(const std::string& save_path) const
     std::vector<int16_t> data_s16_interleave(getNumChannels()*getNumFrames());
 
     int r = 0;
-    for(int c = 0; c < getNumChannels(); ++c)
+    for(size_t c = 0; c < getNumChannels(); ++c)
     {
-        for(int i = 0; i < getNumFrames(); ++i)
+        for(size_t i = 0; i < getNumFrames(); ++i)
         {
             float x = samples[c][i];
             float xx = 0.0;
@@ -130,9 +130,9 @@ int AudioFile::saveToWave(const std::string& save_path) const
     drwav_uint64 framesWritten = drwav_write_pcm_frames(&wav, getNumFrames(), data_s16_interleave.data());
 
     drwav_uninit(&wav);
-    return 0;
+    return framesWritten;
 }
-void AudioFile::setChannelData(int channel, float *data, size_t data_len)
+void AudioFile::setChannelData(size_t channel, float *data, size_t data_len)
 {
     if(channel >= 2)
     {

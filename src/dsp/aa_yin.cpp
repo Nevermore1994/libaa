@@ -7,10 +7,10 @@
 namespace libaa
 {
 Yin::Yin(size_t block_size, size_t sample_rate, float threshold)
-: block_size_(block_size),
-sample_rate_(sample_rate),
-threshold_(threshold),
-half_size_(block_size / 2)
+    : block_size_(block_size),
+      half_size_(block_size / 2),
+      sample_rate_(sample_rate),
+      threshold_(threshold)
 {
     yin_buffer_.resize(half_size_);
 }
@@ -36,7 +36,7 @@ void Yin::difference(const float* data)
     power_sum(0) = reversed_seq.square().sum();
 
     ArrayXf x_square = x.square();
-    for(int i = 1; i < half_size_; ++i)
+    for(size_t i = 1; i < half_size_; ++i)
     {
         power_sum(i) = power_sum(i-1) - x_square(i-1) + x_square(i + half_size_ - 1);
     }

@@ -48,7 +48,7 @@ void Flanger::processBlock(AudioBuffer<float> &buffer)
     float phase = 0.0f;
     float channel0EndPhase = impl_->phase_;
 
-    assert(num_channels <= impl_->dlines_.getNumLines());
+    assert(static_cast<size_t>(num_channels) <= impl_->dlines_.getNumLines());
 
     for(int c = 0; c < num_channels; ++c)
     {

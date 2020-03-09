@@ -22,8 +22,8 @@ public:
     }
 
     explicit AudioBuffer(int num_channels, int num_samples)
-        : num_channels_(num_channels),
-          size_(num_samples)
+        : size_(num_samples),
+          num_channels_(num_channels)
     {
         assert(num_channels >= 0);
         assert(num_samples >= 0);
@@ -35,8 +35,8 @@ public:
                 int num_channel_to_use,
                 int start_sample,
                 int num_samples)
-        : num_channels_(num_channel_to_use),
-          size_(num_samples)
+        : size_(num_samples),
+          num_channels_(num_channel_to_use)
     {
         assert(data_refer_to != nullptr);
         assert(num_channel_to_use >= 0);
@@ -52,24 +52,24 @@ public:
         channels_.resize(num_channels_ + 1);
         channels_[num_channels_] = nullptr;
 
-        for(int i = 0; i < num_channels_; ++i)
+        for(size_t i = 0; i < num_channels_; ++i)
         {
             channels_[i] = data_refer_to[i] + offset;
         }
     }
 
 
-    int getNumSamples() const {return size_;}
-    int getNumChannels() const {return num_channels_;}
+    size_t getNumSamples() const {return size_;}
+    size_t getNumChannels() const {return num_channels_;}
 
-    T* getWritePointer(int channel_number) const noexcept
+    T* getWritePointer(size_t channel_number) const noexcept
     {
         assert(channel_number < num_channels_);
 
         return channels_[channel_number];
     }
 
-    const T* getReadPointer(int channel_number) const noexcept
+    const T* getReadPointer(size_t channel_number) const noexcept
     {
         assert(channel_number < num_channels_);
 
@@ -78,7 +78,7 @@ public:
 
     void clear() const noexcept
     {
-        for(int i = 0; i < num_channels_; ++i)
+        for(size_t i = 0; i < num_channels_; ++i)
         {
             std::fill(channels_[i], channels_[i]+size_, 0);
         }
@@ -91,7 +91,7 @@ private:
 
         allocated_data_.resize(num_space_to_allocate);
         channels_.resize(num_channels_ + 1);
-        for(int i = 0; i < num_channels_; ++i)
+        for(size_t i = 0; i < num_channels_; ++i)
         {
             channels_[i] = (allocated_data_.data() + i*size_);
         }

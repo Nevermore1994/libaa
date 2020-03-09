@@ -50,7 +50,7 @@ ArrayXXf MFCC::melBanks(const ArrayXXf& S, const Options& opts, int sample_rate)
 
     ArrayXXf mel_banks = ArrayXXf::Zero(opts.n_mels, n_fft);
     int num_weights = 0;
-    for(int i = 0; i < opts.n_mels; ++i)
+    for(size_t i = 0; i < opts.n_mels; ++i)
     {
         const int freq = freq_points[i];
         const int freq_next = freq_points[i + 1];

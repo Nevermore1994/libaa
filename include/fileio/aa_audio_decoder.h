@@ -34,7 +34,7 @@ public:
 
         int num_readed = read(result.data(), size);
 
-        if(num_readed != size)
+        if(num_readed != static_cast<int>(size))
         {
             result.resize(num_readed);
         }

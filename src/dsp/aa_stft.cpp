@@ -27,7 +27,7 @@ Eigen::ArrayXXcf STFT::stft(const float* data, size_t data_len, const Options& o
     Eigen::ArrayXf cur_frame(opts.win_size);
 
     FFT fft(opts.win_size);
-    int idx = 0;
+    size_t idx = 0;
     std::vector<float> w = Window::getWindow(opts.win_type, opts.win_size);
     Eigen::Map<Eigen::ArrayXf> window(w.data(), w.size());
 

@@ -43,8 +43,8 @@ std::vector<float> FFT::fftconvolve(const float* x, size_t x_len, const float* y
 
     std::vector<float> padding_x(output_size);
     std::vector<float> padding_y(output_size);
-    for(int i = 0; i < x_len; ++i) { padding_x[i] = x[i]; }
-    for(int i = 0; i < y_len; ++i) { padding_y[i] = y[i]; }
+    for(size_t i = 0; i < x_len; ++i) { padding_x[i] = x[i]; }
+    for(size_t i = 0; i < y_len; ++i) { padding_y[i] = y[i]; }
 
     std::vector<std::complex<float>> X(output_size/2 + 1);
     std::vector<std::complex<float>> Y(output_size/2 + 1);
@@ -53,7 +53,7 @@ std::vector<float> FFT::fftconvolve(const float* x, size_t x_len, const float* y
     fft.forward(padding_y.data(), Y.data());
 
     std::vector<std::complex<float>> complex_mul_result(output_size/2 + 1);
-    for(int i = 0; i < output_size/2 + 1; ++i)
+    for(size_t i = 0; i < output_size/2 + 1; ++i)
     {
         complex_mul_result[i] = X[i] * Y[i];
     }
@@ -61,7 +61,7 @@ std::vector<float> FFT::fftconvolve(const float* x, size_t x_len, const float* y
     std::vector<float> conv_result(output_size);
     fft.inverse(complex_mul_result.data(), conv_result.data());
 
-    for(int i = 0; i < output_size; ++i)
+    for(size_t i = 0; i < output_size; ++i)
     {
         conv_result[i] /= float(output_size);
     }

@@ -15,7 +15,7 @@ using namespace libaa;
 
 int main(int argc, char* argv[])
 {
-    const string input_filename = "../../res/wav/english_voice_test.wav";
+    const string input_filename = "../../res/wav/wav_stereo_16bit_44100.wav";
     string output_filename = "audio_effect_result.wav";
 
     AudioFile audio_file;
