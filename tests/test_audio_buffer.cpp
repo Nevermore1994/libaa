@@ -18,11 +18,18 @@ public:
             left_data[i] = static_cast<float>(i);
             right_data[i] = left_data[i];
         }
+
+        external_data.emplace_back(left_data);
+        external_data.emplace_back(right_data);
     }
     constexpr static int num_samples = 512;
     constexpr static int num_channels = 2;
     float left_data[num_samples];
     float right_data[num_samples];
+
+    vector<float*> external_data;
+    int num_channel_to_use = 2;
+    int start_sample = 0;
 
 };
 
@@ -59,11 +66,7 @@ TEST_F(AAudioBuffer, AllocMemoryWhenCreateWithSize)
 
 TEST_F(AAudioBuffer, CreateWithDataReferTo)
 {
-    vector<float*> data_refet_to = {left_data, right_data};
-
-    int num_channel_to_use = 2;
-    int start_sample = 0;
-    AudioBuffer<float> buffer(data_refet_to.data(), num_channel_to_use, start_sample, num_samples);
+    AudioBuffer<float> buffer(external_data.data(), num_channel_to_use, start_sample, num_samples);
 
     EXPECT_THAT(buffer.getNumSamples(), num_samples);
     EXPECT_THAT(buffer.getNumChannels(), num_channel_to_use);
@@ -75,11 +78,8 @@ TEST_F(AAudioBuffer, CreateWithDataReferTo)
 
 TEST_F(AAudioBuffer, CreateWithDataReferToWillShareTheSameMemory)
 {
-    vector<float*> data_refet_to = {left_data, right_data};
 
-    int num_channel_to_use = 2;
-    int start_sample = 0;
-    AudioBuffer<float> buffer(data_refet_to.data(), num_channel_to_use, start_sample, num_samples);
+    AudioBuffer<float> buffer(external_data.data(), num_channel_to_use, start_sample, num_samples);
 
     left_data[233] = 1;
     right_data[233] = 1;
@@ -90,6 +90,49 @@ TEST_F(AAudioBuffer, CreateWithDataReferToWillShareTheSameMemory)
     buffer.getWritePointer(1)[233] = 0;
     EXPECT_THAT(buffer.getReadPointer(0)[233], FloatEq(0));
     EXPECT_THAT(buffer.getReadPointer(1)[233], FloatEq(0));
+}
+
+TEST_F(AAudioBuffer, CopiesAnotherBufferSharedSameDataIfTheBufferUsingExternalBufferData)
+{
+    AudioBuffer<float> buffer(external_data.data(), num_channel_to_use, start_sample, num_samples);
+
+    AudioBuffer<float> new_buffer(buffer);
+    buffer.getWritePointer(0)[0] = 10;
+
+    ASSERT_THAT(new_buffer.getWritePointer(0)[0], Eq(10));
+}
+
+TEST_F(AAudioBuffer, CopiesAnotherBufferHasOwnData)
+{
+    AudioBuffer<float> origin_buffer(2, 10);
+
+    AudioBuffer<float> new_buffer(origin_buffer);
+    origin_buffer.getWritePointer(0)[0] = 10;
+
+    ASSERT_THAT(new_buffer.getWritePointer(0)[0], Not(10));
+}
+
+TEST_F(AAudioBuffer, MakeACopyWillCopyAllOfItsContent)
+{
+    AudioBuffer<float> buffer(external_data.data(), num_channel_to_use, start_sample, num_samples);
+
+    AudioBuffer<float> new_buffer;
+    new_buffer.copyFrom(buffer);
+
+    buffer.getWritePointer(0)[0] = 10;
+
+    ASSERT_THAT(new_buffer.getWritePointer(0)[0], Not(10));
+}
+
+TEST_F(AAudioBuffer, AssignAnotherBufferHasOwnData)
+{
+    AudioBuffer<float> origin_buffer(2, 10);
+
+    AudioBuffer<float> new_buffer;
+    new_buffer = origin_buffer;
+    origin_buffer.getWritePointer(0)[0] = 10;
+
+    ASSERT_THAT(new_buffer.getWritePointer(0)[0], Not(10));
 }
 
 TEST_F(AAudioBuffer, AllSamplesInAllChannelSetToZeroAfterClear)
