@@ -10,6 +10,7 @@ namespace libaa
 class AudioEffectProcessor
 {
 public:
+    virtual ~AudioEffectProcessor() = default;
     /**
      * Returns the processor name
      */

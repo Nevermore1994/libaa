@@ -8,6 +8,7 @@
 #include "audio_effect/aa_delay_effect.h"
 #include "audio_effect/aa_vibrato_effect.h"
 #include "audio_effect/aa_flanger.h"
+#include "audio_effect/aa_chorus.h"
 #include <iostream>
 using namespace std;
 using namespace libaa;
@@ -15,7 +16,7 @@ using namespace libaa;
 
 int main(int argc, char* argv[])
 {
-    const string input_filename = "../../res/wav/wav_stereo_16bit_44100.wav";
+    const string input_filename = "../../res/wav/es01_2ch_48k_i16.wav";
     string output_filename = "audio_effect_result.wav";
 
     AudioFile audio_file;
@@ -32,9 +33,14 @@ int main(int argc, char* argv[])
     int sample_index = 0;
     int acctual_block_size = 0;
 
-    Flanger processor;
+    Chorus processor;
     processor.setRateAndBufferSizeDetails(audio_file.getSampleRate(), predefine_block_size);
     processor.prepareToPlay(audio_file.getSampleRate(), predefine_block_size);
+    processor.min_delay = 0.05;
+    processor.num_voices = 4;
+    processor.sweep_width = 0.05;
+    processor.lfo_freq = 0.5;
+    processor.stereo = 1;
 //    processor.lfo_freq = 1;
 //    processor.feedback_ = 0.95f;
 

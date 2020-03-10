@@ -55,6 +55,7 @@ set(AUDIO_EFFECT_DIR
         src/audio_effect/aa_delay_effect.cpp
         src/audio_effect/aa_vibrato_effect.cpp
         src/audio_effect/aa_flanger.cpp
+        src/audio_effect/aa_chorus.cpp
         )
 
 add_library(libaa ${FILEIO_SRC} ${DSP_SRC} ${AUDIO_EFFECT_DIR})
