@@ -12,7 +12,7 @@ class LFO
 public:
     enum class WaveformType
     {
-        kWaveformSine
+        kWaveformSine = 0
     };
     LFO() = default;
 
