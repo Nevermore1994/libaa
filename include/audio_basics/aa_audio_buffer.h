@@ -184,6 +184,18 @@ public:
         }
     }
 
+    void setSize(int new_num_channels, int new_num_samples) noexcept
+    {
+        if(new_num_channels != static_cast<int>(num_channels_) || new_num_samples != static_cast<int>(size_))
+        {
+            num_channels_ = new_num_channels;
+            size_ = new_num_samples;
+
+            allocateData();
+            clear();
+        }
+    }
+
 private:
     void allocateData()
     {

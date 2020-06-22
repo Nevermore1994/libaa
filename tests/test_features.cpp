@@ -46,41 +46,6 @@ TEST_F(ASTFT, NumberFramesEqualsSizeDivideHopSize)
     ASSERT_THAT(stft_result.cols(), Eq(data_length / hop_size));
 }
 
-TEST_F(ASTFT, SlideWindowWithHopSize)
-{
-    stft_result = STFT::stft(fake_data.data(), fake_data.size(), opts);
-
-    FFT fft(win_size);
-
-    size_t idx = 0;
-    int frame_idx = 0;
-    std::vector<float> w = Window::getWindow(opts.win_type, win_size);
-    Eigen::Map<Eigen::ArrayXf> window(w.data(), w.size());
-
-    for(;idx < fake_data.size() - hop_size;)
-    {
-        vector<float> cur_frame(fake_data.begin() + idx,
-                                fake_data.begin() + idx + win_size);
-
-        // applying window
-        for(int i = 0;i < win_size; ++i) { cur_frame[i] *= window(i); }
-
-        vector<complex<float>> cur_fft_out(win_size/2 + 1);
-        fft.forward(cur_frame.data(), cur_fft_out.data());
-
-        Eigen::MatrixXcf stft_cur = stft_result.col(frame_idx);
-
-        for(int i = 0; i < win_size/2 + 1; ++i)
-        {
-            ASSERT_THAT(stft_cur(i), ComplexNearEqual(1e-6, cur_fft_out[i]));
-        }
-
-        idx += hop_size;
-        ++frame_idx;
-    }
-
-}
-
 TEST(MFCCTest, OutputSize)
 {
     const int data_length = 2048;
