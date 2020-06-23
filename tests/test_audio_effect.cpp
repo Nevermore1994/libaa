@@ -8,6 +8,7 @@
 #include "audio_effect/aa_flanger.h"
 #include "audio_effect/aa_chorus.h"
 #include "audio_effect/aa_tremolo.h"
+#include "audio_effect/aa_compressor.h"
 #include <gmock/gmock.h>
 
 using namespace std;
@@ -25,7 +26,7 @@ public:
         data_refer_to[0] = left_data.data();
         data_refer_to[1] = right_data.data();
 
-        block = AudioBuffer<float>(data_refer_to,2,0,left_data.size() );
+        block = AudioBuffer<float>(data_refer_to,2,0,block_size );
     }
     int sample_rate = 44100;
     int block_size = 1024;
@@ -85,6 +86,18 @@ TEST_F(AudioEffectTest, Chorus)
 TEST_F(AudioEffectTest, Tremolo)
 {
     Tremolo processor;
+    processor.setRateAndBufferSizeDetails(sample_rate, block_size);
+    processor.prepareToPlay(sample_rate, block_size);
+
+    processor.processBlock(block);
+    processor.reset();
+    processor.releaseResources();
+}
+
+
+TEST_F(AudioEffectTest, Compressor)
+{
+    Compressor processor;
     processor.setRateAndBufferSizeDetails(sample_rate, block_size);
     processor.prepareToPlay(sample_rate, block_size);
 
