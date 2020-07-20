@@ -105,3 +105,15 @@ TEST_F(AudioEffectTest, Compressor)
     processor.reset();
     processor.releaseResources();
 }
+
+
+TEST_F(AudioEffectTest, Distortion)
+{
+    Compressor processor;
+    processor.setRateAndBufferSizeDetails(sample_rate, block_size);
+    processor.prepareToPlay(sample_rate, block_size);
+
+    processor.processBlock(block);
+    processor.reset();
+    processor.releaseResources();
+}
