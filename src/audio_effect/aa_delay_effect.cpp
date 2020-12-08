@@ -15,7 +15,7 @@ public:
 };
 
 
-void DelayEffect::prepareToPlay(double sample_rate, int samplers_per_block)
+void DelayEffect::prepareToPlay(double sample_rate, int max_block_size)
 {
     int num_new_channel = 2;
 

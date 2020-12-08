@@ -24,7 +24,7 @@ public:
     /**
      * Called before processing starts, to let processor prepare itself.
      */
-    virtual void prepareToPlay(double sample_rate, int samplers_per_block) = 0;
+    virtual void prepareToPlay(double sample_rate, int max_block_size) = 0;
 
     /**
      * Resets internal states.

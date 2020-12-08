@@ -23,7 +23,7 @@ std::string Tremolo::getName() const
 {
     return std::string("tremolo");
 }
-void Tremolo::prepareToPlay(double sample_rate, int samplers_per_block)
+void Tremolo::prepareToPlay(double sample_rate, int max_block_size)
 {
     impl_->lfo_phase_ = 0;
     impl_->invert_sample_rate_ = 1.0 / sample_rate;

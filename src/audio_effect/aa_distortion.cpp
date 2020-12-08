@@ -98,7 +98,7 @@ Distortion::Distortion():
 
 }
 
-void Distortion::prepareToPlay(double sample_rate, int samplers_per_block)
+void Distortion::prepareToPlay(double sample_rate, int max_block_size)
 {
 }
 

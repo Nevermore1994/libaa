@@ -9,6 +9,8 @@
 #include "audio_effect/aa_vibrato_effect.h"
 #include "audio_effect/aa_flanger.h"
 #include "audio_effect/aa_chorus.h"
+#include "audio_effect/aa_distortion.h"
+#include "audio_effect/aa_robot.h"
 #include <iostream>
 using namespace std;
 using namespace libaa;
@@ -33,14 +35,21 @@ int main(int argc, char* argv[])
     int sample_index = 0;
     int acctual_block_size = 0;
 
-    Chorus processor;
+
+    Robotisation processor;
     processor.setRateAndBufferSizeDetails(audio_file.getSampleRate(), predefine_block_size);
     processor.prepareToPlay(audio_file.getSampleRate(), predefine_block_size);
-    processor.min_delay = 0.05;
-    processor.num_voices = 4;
-    processor.sweep_width = 0.05;
-    processor.lfo_freq = 0.5;
-    processor.stereo = 1;
+//    processor.hop_size = 256;
+//    processor.fft_size = 1024;
+
+//    processor.input_gainDb = 30;
+//    processor.distortion_type = Distortion::kHardClipping;
+
+//    processor.min_delay = 0.05;
+//    processor.num_voices = 4;
+//    processor.sweep_width = 0.05;
+//    processor.lfo_freq = 0.5;
+//    processor.stereo = 1;
 //    processor.lfo_freq = 1;
 //    processor.feedback_ = 0.95f;
 

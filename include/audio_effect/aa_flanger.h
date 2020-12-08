@@ -14,7 +14,7 @@ public:
     std::string getName() const override {
         return std::string("flanger");
     }
-    void prepareToPlay(double sample_rate, int samplers_per_block) override;
+    void prepareToPlay(double sample_rate, int max_block_size) override;
     void reset() override;
     void releaseResources() override;
     void processBlock(AudioBuffer<float> &buffer) override;

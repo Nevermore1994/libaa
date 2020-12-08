@@ -59,6 +59,7 @@ set(AUDIO_EFFECT_DIR
         src/audio_effect/aa_tremolo.cpp
         src/audio_effect/aa_compressor.cpp
         src/audio_effect/aa_distortion.cpp
+        src/audio_effect/aa_robot.cpp
         )
 
 add_library(libaa ${FILEIO_SRC} ${DSP_SRC} ${AUDIO_EFFECT_DIR})

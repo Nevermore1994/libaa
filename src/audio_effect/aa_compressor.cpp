@@ -10,14 +10,14 @@ namespace libaa
 class Compressor::Impl
 {
 public:
-    void prepareToPlay(double sample_rate, int samplers_per_block)  {
-        input_buffer_.setSize(1, samplers_per_block);
+    void prepareToPlay(double sample_rate, int max_block_size)  {
+        input_buffer_.setSize(1, max_block_size);
 
-        xg_.resize(samplers_per_block);
-        yg_.resize(samplers_per_block);
-        xl_.resize(samplers_per_block);
-        yl_.resize(samplers_per_block);
-        c_.resize(samplers_per_block);
+        xg_.resize(max_block_size);
+        yg_.resize(max_block_size);
+        xl_.resize(max_block_size);
+        yl_.resize(max_block_size);
+        c_.resize(max_block_size);
 
         yl_prev_ = 0.0f;
         threshold_ = 0.0f;
@@ -101,8 +101,8 @@ Compressor::Compressor() :
 }
 
 
-void Compressor::prepareToPlay(double sample_rate, int samplers_per_block)  {
-    impl_->prepareToPlay(sample_rate, samplers_per_block);
+void Compressor::prepareToPlay(double sample_rate, int max_block_size)  {
+    impl_->prepareToPlay(sample_rate, max_block_size);
 }
 void Compressor::reset(){
 }

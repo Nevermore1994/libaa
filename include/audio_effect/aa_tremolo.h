@@ -14,7 +14,7 @@ public:
 
     std::string getName() const override;
 
-    void prepareToPlay(double sample_rate, int samplers_per_block) override;
+    void prepareToPlay(double sample_rate, int max_block_size) override;
 
     void reset() override ;
 

@@ -9,6 +9,8 @@
 #include "audio_effect/aa_chorus.h"
 #include "audio_effect/aa_tremolo.h"
 #include "audio_effect/aa_compressor.h"
+#include "audio_effect/aa_distortion.h"
+#include "audio_effect/aa_robot.h"
 #include <gmock/gmock.h>
 
 using namespace std;
@@ -109,7 +111,20 @@ TEST_F(AudioEffectTest, Compressor)
 
 TEST_F(AudioEffectTest, Distortion)
 {
-    Compressor processor;
+    Distortion processor;
+    processor.setRateAndBufferSizeDetails(sample_rate, block_size);
+    processor.prepareToPlay(sample_rate, block_size);
+
+    processor.processBlock(block);
+    processor.reset();
+    processor.releaseResources();
+}
+
+
+
+TEST_F(AudioEffectTest, Robotisation)
+{
+    Robotisation processor;
     processor.setRateAndBufferSizeDetails(sample_rate, block_size);
     processor.prepareToPlay(sample_rate, block_size);
 
