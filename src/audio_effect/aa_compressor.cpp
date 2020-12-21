@@ -33,10 +33,13 @@ public:
         assert(num_samples <= static_cast<size_t>(block_size));
 
         input_buffer_.clear();
+
+        // mix
+        auto* input_data = input_buffer_.getWritePointer(0);
         for(auto i=0u; i < num_samples; ++i)
         {
-            input_buffer_.getWritePointer(0)[i] += 0.5f * buffer.getWritePointer(0)[i];
-            input_buffer_.getWritePointer(1)[i] += 0.5f * buffer.getWritePointer(1)[i];
+            input_data[i] += 0.5f * buffer.getWritePointer(0)[i];
+            input_data[i] += 0.5f * buffer.getWritePointer(1)[i];
         }
 
         float alpha_attack = exp(-1/(0.001 * attack_time_ * sample_rate));
