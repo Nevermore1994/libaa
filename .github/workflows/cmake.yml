@@ -46,7 +46,7 @@ jobs:
       run: ctest -C $BUILD_TYPE --output-on-failure
 
     - name: Upload coverage to Codecov
-      working-directory: build
+      working-directory: ${{runner.workspace}}/build
       env:
         CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
       run: |
