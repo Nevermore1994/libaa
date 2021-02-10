@@ -59,7 +59,7 @@ TEST_F(AWaveAudioFormatReader, ReturnsFalseIfOpenFailed)
 
 TEST_F(AWaveAudioFormatReader, ReturnTrueIfOpenSuccessfully)
 {
-    ifstream in_stream(test_file_name);
+    fstream in_stream(test_file_name, std::ios::in);
 
     WaveAudioFormatReader reader(in_stream);
 

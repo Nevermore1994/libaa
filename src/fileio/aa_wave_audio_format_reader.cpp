@@ -39,13 +39,13 @@ public:
     static size_t readCallback(void* pUserData, void* pBufferOut, size_t bytesToRead)
     {
         auto* self = (WaveAudioFormatReader::Impl*)(pUserData);
-        self->parent_->in_stream_.read((char*)pBufferOut, bytesToRead);
-        if(self->parent_->in_stream_.good()){
-            return bytesToRead;
+
+        if(!self->parent_->in_stream_.read((char*)pBufferOut, bytesToRead)){
+            // clear bits so that seekCallback can seek successfully
+            self->parent_->in_stream_.clear();
+            return 0;
         }
-
-
-        return 0;
+        return bytesToRead;
     }
 
     static drwav_bool32 seekCallback(void* pUserData, int offset, drwav_seek_origin origin)
@@ -53,10 +53,19 @@ public:
         auto* self = (WaveAudioFormatReader::Impl*)(pUserData);
         if(origin == drwav_seek_origin_current)
         {
-            self->parent_->in_stream_.seekg(offset, std::ios::cur);
+            if(!self->parent_->in_stream_.seekg(offset, std::ios::cur)){
+                return DRWAV_FALSE;
+            }
+
         }else if(origin == drwav_seek_origin_start)
         {
-            self->parent_->in_stream_.seekg(offset, std::ios::beg);
+            int y = self->parent_->in_stream_.tellg();
+            (void)y;
+            if(!self->parent_->in_stream_.seekg(offset, std::ios::beg)){
+                int x = self->parent_->in_stream_.tellg();
+                (void)x;
+                return DRWAV_FALSE;
+            }
         }
 
         return DRWAV_TRUE;
