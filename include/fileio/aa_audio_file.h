@@ -34,7 +34,7 @@ public:
 
     inline void setNumChannles(size_t channels)   { num_channels_ = channels; samples.resize(num_channels_);}
     inline void setSampleRate(size_t sample_rate) { sample_rate_ = sample_rate; }
-    inline void setNumFrames(size_t num_frames)   { for(auto x: samples){x.resize(num_frames);}}
+    inline void setNumFrames(size_t num_frames)   { for(auto& x: samples){x.resize(num_frames);}}
     inline void setNumBits(size_t bits)           { num_bits_ = bits; }
 
 protected:
