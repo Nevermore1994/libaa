@@ -10,4 +10,7 @@ namespace libaa
 bool AudioFormatReader::isOpenOk() {
     return false;
 }
+int64_t AudioFormatReader::getPosition() const {
+    return pos_;
+}
 }

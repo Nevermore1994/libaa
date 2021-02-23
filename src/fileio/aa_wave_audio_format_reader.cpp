@@ -5,12 +5,8 @@
 
 #include "fileio/aa_wav_audio_format_reader.h"
 #include "dr_wav.h"
+#include <vector>
 
-// drwav_bool32 drwav_init(drwav* pWav,
-// drwav_read_proc onRead,
-// drwav_seek_proc onSeek,
-// void* pUserData,
-// const drwav_allocation_callbacks* pAllocationCallbacks);
 namespace libaa
 {
 class WaveAudioFormatReader::Impl
@@ -24,6 +20,33 @@ public:
 
     ~Impl(){
         drwav_uninit(&wav_);
+    }
+
+    bool readSamples(float **dest_channels,
+                     int num_dest_channels,
+                     int start_offset_of_dest,
+                     int64_t start_offset_of_file,
+                     int num_samples)
+    {
+        if(parent_->pos_ != start_offset_of_file){
+            if(drwav_seek_to_pcm_frame(&wav_, start_offset_of_file)){
+                parent_->pos_ = start_offset_of_file;
+            }
+        }
+
+        num_dest_channels = std::min(num_dest_channels, parent_->num_channels);
+        interleave_buffer_.resize(num_dest_channels * num_samples);
+
+        auto num_read = drwav_read_pcm_frames_f32(&wav_, num_samples, interleave_buffer_.data());
+
+        // interleave to planar
+        for(drwav_uint64 i = start_offset_of_dest, ii = 0; i < num_read; ++i){
+            for(auto c = 0; c < num_dest_channels; ++c){
+                dest_channels[c][i] = interleave_buffer_[ii++];
+            }
+        }
+
+        return true;
     }
 
     void openWaveFromStream(){
@@ -59,11 +82,7 @@ public:
 
         }else if(origin == drwav_seek_origin_start)
         {
-            int y = self->parent_->in_stream_.tellg();
-            (void)y;
             if(!self->parent_->in_stream_.seekg(offset, std::ios::beg)){
-                int x = self->parent_->in_stream_.tellg();
-                (void)x;
                 return DRWAV_FALSE;
             }
         }
@@ -71,9 +90,9 @@ public:
         return DRWAV_TRUE;
     }
 
-
     WaveAudioFormatReader* parent_;
     drwav wav_;
+    std::vector<float> interleave_buffer_;
 };
 
 WaveAudioFormatReader::WaveAudioFormatReader(std::istream& in_stream)
@@ -89,8 +108,13 @@ bool WaveAudioFormatReader::readSamples(float **dest_channels,
                                         int64_t start_offset_of_file,
                                         int num_samples)
 {
-    return false;
+    if(!isOpenOk()){
+        return false;
+    }
+
+    return impl_->readSamples(dest_channels, num_dest_channels, start_offset_of_dest, start_offset_of_file, num_samples);
 }
+
 bool WaveAudioFormatReader::isOpenOk() {
     return sample_rate > 0 && num_channels > 0 && length_in_samples > 0;
 }

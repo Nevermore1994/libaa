@@ -6,6 +6,10 @@
 #include <gmock/gmock.h>
 using namespace testing;
 
+MATCHER_P(FloatNearPointwise, tol, "Out of range") {
+    return (std::get<0>(arg)>std::get<1>(arg)-tol && std::get<0>(arg)<std::get<1>(arg)+tol) ;
+}
+
 namespace libaa
 {
 MATCHER_P(NearWithPrecision, ferr, "")

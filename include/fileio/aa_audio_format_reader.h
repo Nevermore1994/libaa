@@ -26,6 +26,9 @@ public:
                               int start_offset_of_dest,
                               int64_t start_offset_of_file,
                               int num_samples) = 0;
+
+    virtual int64_t getPosition() const;
+
 public:
     std::istream& in_stream_;
 
@@ -33,6 +36,6 @@ public:
     int64_t length_in_samples{0};
     int32_t num_channels{0};
     int32_t num_bits{0};
-
+    int64_t pos_{0};
 };
 }
