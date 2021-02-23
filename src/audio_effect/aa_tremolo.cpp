@@ -2,7 +2,7 @@
 // Created by william on 2020/6/4.
 //
 
-#include "audio_effect/aa_tremolo.h"
+#include "libaa/audio_effect/aa_tremolo.h"
 
 namespace libaa
 {

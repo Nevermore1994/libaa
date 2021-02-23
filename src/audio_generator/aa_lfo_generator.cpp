@@ -3,8 +3,8 @@
 // Created by William.Hua on 2021/1/15.
 //
 
-#include "audio_generator/aa_lfo_generator.h"
-#include "dsp/aa_dsp_utilities.h"
+#include "libaa/audio_generator/aa_lfo_generator.h"
+#include "libaa/dsp/aa_dsp_utilities.h"
 
 namespace libaa
 {

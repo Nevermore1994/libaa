@@ -3,7 +3,7 @@
 //
 
 #pragma once
-#include "audio_basics/aa_delay_line.h"
+#include "aa_delay_line.h"
 
 namespace libaa
 {

@@ -4,7 +4,7 @@
 //
 
 #pragma once
-#include "audio_generator/aa_audio_signal_genrator.h"
+#include "aa_audio_signal_genrator.h"
 #include <cmath>
 #include <memory>
 namespace libaa

@@ -2,7 +2,7 @@
 // Created by william on 2020/6/23.
 //
 
-#include "audio_effect/aa_compressor.h"
+#include "libaa/audio_effect/aa_compressor.h"
 
 namespace libaa
 {

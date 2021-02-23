@@ -3,9 +3,9 @@
 //
 
 #include "dr_wav.h"
-#include "fileio/aa_audio_file.h"
-#include "fileio/aa_wav_decoder.h"
-#include "fileio/aa_audio_decoder_factory.h"
+#include "libaa/fileio/aa_audio_file.h"
+#include "libaa/fileio/aa_wav_decoder.h"
+#include "libaa/fileio/aa_audio_decoder_factory.h"
 #include <iostream>
 
 namespace libaa

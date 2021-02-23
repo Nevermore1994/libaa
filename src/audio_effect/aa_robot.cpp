@@ -2,8 +2,8 @@
 // Created by admin on 2020/8/5.
 //
 
-#include "audio_effect/aa_robot.h"
-#include "dsp/aa_fft.h"
+#include "libaa/audio_effect/aa_robot.h"
+#include "libaa/dsp/aa_fft.h"
 #include <numeric>
 #include <iostream>
 using namespace std;

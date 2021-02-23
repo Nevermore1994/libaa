@@ -4,8 +4,8 @@
 //
 
 #pragma once
-#include "audio_effect/aa_audio_effect_processor.h"
-#include "audio_effect/aa_biquad_impl.h"
+#include "aa_audio_effect_processor.h"
+#include "aa_biquad_impl.h"
 #include <cmath>
 namespace libaa
 {

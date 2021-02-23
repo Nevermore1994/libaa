@@ -2,8 +2,8 @@
 // Created by william on 2020/2/21.
 //
 
-#include "audio_effect/aa_delay_effect.h"
-#include "audio_basics/aa_delay_line_array.h"
+#include "libaa/audio_effect/aa_delay_effect.h"
+#include "libaa/audio_basics/aa_delay_line_array.h"
 namespace libaa
 {
 class DelayEffect::Impl

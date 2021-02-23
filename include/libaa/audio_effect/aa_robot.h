@@ -3,8 +3,8 @@
 //
 
 #pragma once
-#include "audio_effect/aa_audio_effect_processor.h"
-#include "dsp/aa_window.h"
+#include "aa_audio_effect_processor.h"
+#include "libaa/dsp/aa_window.h"
 
 namespace libaa
 {

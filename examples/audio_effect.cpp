@@ -2,16 +2,16 @@
 // Created by william on 2020/2/21.
 //
 
-#include "audio_basics/aa_delay_line.h"
-#include "fileio/aa_audio_file.h"
-#include "audio_basics/aa_audio_buffer.h"
-#include "audio_effect/aa_delay_effect.h"
-#include "audio_effect/aa_vibrato_effect.h"
-#include "audio_effect/aa_flanger.h"
-#include "audio_effect/aa_chorus.h"
-#include "audio_effect/aa_distortion.h"
-#include "audio_effect/aa_robot.h"
-#include "audio_effect/aa_biquad_filter.h"
+#include "libaa/audio_basics/aa_delay_line.h"
+#include "libaa/fileio/aa_audio_file.h"
+#include "libaa/audio_basics/aa_audio_buffer.h"
+#include "libaa/audio_effect/aa_delay_effect.h"
+#include "libaa/audio_effect/aa_vibrato_effect.h"
+#include "libaa/audio_effect/aa_flanger.h"
+#include "libaa/audio_effect/aa_chorus.h"
+#include "libaa/audio_effect/aa_distortion.h"
+#include "libaa/audio_effect/aa_robot.h"
+#include "libaa/audio_effect/aa_biquad_filter.h"
 #include <iostream>
 using namespace std;
 using namespace libaa;

@@ -4,9 +4,9 @@
 
 #pragma once
 
-#include "audio_effect/aa_audio_effect_processor.h"
-#include "audio_basics/aa_delay_line.h"
-#include "dsp/aa_lfo.h"
+#include "aa_audio_effect_processor.h"
+#include "libaa/audio_basics/aa_delay_line.h"
+#include "libaa/dsp/aa_lfo.h"
 
 
 namespace libaa

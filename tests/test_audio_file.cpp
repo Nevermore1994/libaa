@@ -2,8 +2,8 @@
 // Created by william on 2019/12/22.
 //
 
-#include "fileio/aa_audio_file.h"
-#include "fileio/aa_audio_decoder_factory.h"
+#include "libaa/fileio/aa_audio_file.h"
+#include "libaa/fileio/aa_audio_decoder_factory.h"
 #include <gmock/gmock.h>
 #include <string>
 #include <fstream>

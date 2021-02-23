@@ -3,7 +3,7 @@
 //
 
 #pragma once
-#include "audio_effect/aa_audio_effect_processor.h"
+#include "aa_audio_effect_processor.h"
 
 #include <cmath>
 

@@ -2,9 +2,9 @@
 // Created by william on 2020/3/3.
 //
 
-#include "audio_effect/aa_flanger.h"
-#include "dsp/aa_lfo.h"
-#include "audio_basics/aa_delay_line_array.h"
+#include "libaa/audio_effect/aa_flanger.h"
+#include "libaa/dsp/aa_lfo.h"
+#include "libaa/audio_basics/aa_delay_line_array.h"
 namespace libaa
 {
 
