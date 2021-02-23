@@ -1,5 +1,7 @@
 # test dsp
 add_executable(unit_test
+        aa_scope_wave_file.cpp
+
         # dsp
         test_fft.cpp
         test_window.cpp
@@ -22,6 +24,8 @@ add_executable(unit_test
 
         # signal generator
         test_lfo_generator.cpp
+
+        test_wav_audio_format_reader.cpp
         )
 target_link_libraries(unit_test
         gmock_main

@@ -4,15 +4,12 @@
 //
 
 #include "audio_effect/aa_iir_filter.h"
+#include "aa_test_helper.h"
 #include <array>
 #include <gmock/gmock.h>
 
 using namespace testing;
 using namespace libaa;
-
-MATCHER_P(FloatNearPointwise, tol, "Out of range") {
-    return (std::get<0>(arg)>std::get<1>(arg)-tol && std::get<0>(arg)<std::get<1>(arg)+tol) ;
-}
 
 class AIIRFilter : public Test
 {
