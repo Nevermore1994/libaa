@@ -28,6 +28,7 @@ public:
 
     int loadWaveFile(const std::string& filename)
     {
+        (void)filename;
         return 0;
     }
 

@@ -13,3 +13,7 @@ target_link_libraries(audio_effect libaa)
 
 add_executable(signal_generator signal_generator.cpp)
 target_link_libraries(signal_generator libaa)
+
+add_executable(play_sound play_sound.cpp)
+target_link_libraries(play_sound libaa portaudio)
+

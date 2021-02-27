@@ -5,7 +5,6 @@
 #include "libaa/audio_effect/aa_robot.h"
 #include "libaa/dsp/aa_fft.h"
 #include <numeric>
-#include <iostream>
 using namespace std;
 namespace libaa
 {
@@ -19,6 +18,9 @@ public:
 
     void prepareToPlay(double sample_rate, int max_block_size)
     {
+        (void)sample_rate;
+        (void)max_block_size;
+
         fft_ = std::make_unique<FFT>(parent_->fft_size);
 
         fft_time_domain_.resize(parent_->fft_size, 0);
@@ -27,8 +29,6 @@ public:
         window_ = Window::getWindow(parent_->window_type, parent_->fft_size);
         auto window_sum = std::accumulate(std::begin(window_), std::end(window_), 0.0f);
         fft_scale_ = 1.0f / static_cast<float>(parent_->fft_size) * ( window_sum / static_cast<float>(parent_->hop_size));
-
-        cout << fft_scale_ << endl;
 
         input_buffer_.setSize(2, parent_->fft_size);
         output_buffer_.setSize(2, parent_->fft_size);

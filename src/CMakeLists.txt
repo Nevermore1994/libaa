@@ -19,3 +19,7 @@ target_include_directories(libaa
         )
 
 target_link_libraries(libaa PRIVATE dr_libs kissfft)
+target_compile_options(libaa PRIVATE
+        -Wall -Wextra -pedantic -Werror)
+
+#add_compile_options( -Wno-unused-function -Wno-unused-parameter -Wno-missing-braces )

@@ -17,6 +17,8 @@ public:
 
 void DelayEffect::prepareToPlay(double sample_rate, int max_block_size)
 {
+    (void)max_block_size;
+
     int num_new_channel = 2;
 
     const auto max_delay_length = static_cast<size_t>(2.0 * sample_rate);

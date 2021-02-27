@@ -100,6 +100,8 @@ Distortion::Distortion():
 
 void Distortion::prepareToPlay(double sample_rate, int max_block_size)
 {
+    (void)sample_rate;
+    (void)max_block_size;
 }
 
 void Distortion::reset()

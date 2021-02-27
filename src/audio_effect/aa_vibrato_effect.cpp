@@ -19,6 +19,8 @@ public:
 
 void VibratoEffect::prepareToPlay(double sample_rate, int max_block_size)
 {
+    (void)max_block_size;
+
     impl_->invert_sample_rate_ = 1.0/sample_rate;
 
     const int num_supported_channel = 2;
