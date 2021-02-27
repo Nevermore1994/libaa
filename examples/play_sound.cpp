@@ -15,18 +15,12 @@ class DecoderData
 {
 public:
     DecoderData(Mp3AudioFormatReader& r, int frames_per_buffer):
-        reader(r),
-        left_buffer(frames_per_buffer, 0.0f),
-        right_buffer(frames_per_buffer, 0.0f)
+        reader(r)
     {
-        data_refer_to[0] = left_buffer.data();
-        data_refer_to[1] = right_buffer.data();
+
     }
 
     Mp3AudioFormatReader& reader;
-    vector<float> left_buffer;
-    vector<float> right_buffer;
-    float* data_refer_to[2]{};
 };
 
 
@@ -43,14 +37,7 @@ static int patestCallback( const void *inputBuffer, void *outputBuffer,
     (void) statusFlags;
     (void) inputBuffer;
 
-    auto read_ok = data->reader.readSamples(data->data_refer_to, 2, 0, 0, framesPerBuffer);
-
-
-    for(auto i=0; i < framesPerBuffer; i++ )
-    {
-        *out++ = data->data_refer_to[0][i];   /* left */
-        *out++ = data->data_refer_to[1][i];  /* right */
-    }
+    auto read_ok = data->reader.readInterleaveSamples(out, 2, 0, 0, framesPerBuffer);
 
     if(!read_ok){
         return paComplete;

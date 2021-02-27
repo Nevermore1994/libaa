@@ -27,6 +27,12 @@ public:
                               int64_t start_offset_of_file,
                               int num_samples) = 0;
 
+    virtual bool readInterleaveSamples(float* dest_channels,
+                                       int num_dest_channels,
+                                       int start_offset_of_dest,
+                                       int64_t start_offset_of_file,
+                                       int num_samples) = 0;
+
     virtual int64_t getPosition() const;
 
 public:

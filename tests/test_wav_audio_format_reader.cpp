@@ -27,6 +27,7 @@ public:
         left_buffer.resize(n_read_samples);
         right_buffer.resize(n_read_samples);
         third_buffer.resize(n_read_samples);
+        interleave_buffer.resize(n_read_samples * num_channels);
         dest[0] = left_buffer.data();
         dest[1] = right_buffer.data();
         dest[2] = third_buffer.data();
@@ -48,6 +49,7 @@ public:
     vector<float> right_buffer;
     vector<float> third_buffer;
     float* dest[3];
+    vector<float> interleave_buffer;
 
     const std::string test_file_name="wave_audio_format_reader_test.wav";
     std::unique_ptr<ScopeWaveFile> test_file;
@@ -101,6 +103,18 @@ TEST_F(AWaveAudioFormatReader, CanReadSamples)
     ASSERT_TRUE(ret);
     vector<float> ref(n_read_samples, fill_val);
     ASSERT_THAT(left_buffer, Pointwise(FloatNearPointwise(1e-3), ref));
+}
+
+TEST_F(AWaveAudioFormatReader, CanReadInterleaveSamples)
+{
+    ifstream in_stream(test_file_name);
+    WaveAudioFormatReader reader(in_stream);
+
+    auto ret = reader.readInterleaveSamples(interleave_buffer.data(), num_channels, 0, 0, n_read_samples);
+
+    ASSERT_TRUE(ret);
+    vector<float> ref(n_read_samples * num_channels, fill_val);
+    ASSERT_THAT(interleave_buffer, Pointwise(FloatNearPointwise(1e-3), ref));
 }
 
 TEST_F(AWaveAudioFormatReader, ReadOnlyAvailableChannels)

@@ -22,6 +22,12 @@ public:
                      int64_t start_offset_of_file,
                      int num_samples) override;
 
+    bool readInterleaveSamples(float *dest_channels,
+                               int num_dest_channels,
+                               int start_offset_of_dest,
+                               int64_t start_offset_of_file,
+                               int num_samples) override;
+
 private:
     class Impl;
     std::shared_ptr<Impl> impl_;

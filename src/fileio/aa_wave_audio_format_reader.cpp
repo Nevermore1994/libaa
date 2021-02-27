@@ -49,6 +49,29 @@ public:
         return true;
     }
 
+    bool readInterleaveSamples(float *dest_channels,
+                     int num_dest_channels,
+                     int start_offset_of_dest,
+                     int64_t start_offset_of_file,
+                     int num_samples)
+    {
+        if(parent_->pos_ != start_offset_of_file){
+            if(drwav_seek_to_pcm_frame(&wav_, start_offset_of_file)){
+                parent_->pos_ = start_offset_of_file;
+            }
+        }
+
+        num_dest_channels = std::min(num_dest_channels, parent_->num_channels);
+
+        if(start_offset_of_file > 0){
+            dest_channels += start_offset_of_dest * num_dest_channels;
+        }
+
+        drwav_read_pcm_frames_f32(&wav_, num_samples, dest_channels);
+
+        return true;
+    }
+
     void openWaveFromStream(){
         if(drwav_init(&wav_,readCallback,seekCallback,this,nullptr))
         {
@@ -117,6 +140,19 @@ bool WaveAudioFormatReader::readSamples(float **dest_channels,
 
 bool WaveAudioFormatReader::isOpenOk() {
     return sample_rate > 0 && num_channels > 0 && length_in_samples > 0;
+}
+bool WaveAudioFormatReader::readInterleaveSamples(float *dest_channels,
+                                                  int num_dest_channels,
+                                                  int start_offset_of_dest,
+                                                  int64_t start_offset_of_file,
+                                                  int num_samples)
+{
+    (void)dest_channels;
+    (void)num_dest_channels;
+    (void)start_offset_of_dest;
+    (void)start_offset_of_file;
+    (void)num_samples;
+    return impl_->readInterleaveSamples(dest_channels, num_dest_channels, start_offset_of_dest, start_offset_of_file, num_samples);
 }
 
 }

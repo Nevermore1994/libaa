@@ -54,6 +54,29 @@ public:
         return true;
     }
 
+    bool readInterleaveSamples(float *dest_channels,
+                               int num_dest_channels,
+                               int start_offset_of_dest,
+                               int64_t start_offset_of_file,
+                               int num_samples)
+    {
+        if(parent_->pos_ != start_offset_of_file){
+            if(drmp3_seek_to_pcm_frame(&mp3_, start_offset_of_file)){
+                parent_->pos_ = start_offset_of_file;
+            }
+        }
+
+        num_dest_channels = std::min(num_dest_channels, parent_->num_channels);
+
+        if(start_offset_of_dest > 0){
+            dest_channels += start_offset_of_dest * num_dest_channels;
+        }
+
+        drmp3_read_pcm_frames_f32(&mp3_, num_samples, dest_channels);
+
+        return true;
+    }
+
     static size_t readCallback(void* pUserData, void* pBufferOut, size_t bytesToRead)
     {
         auto* self = (Mp3AudioFormatReader::Impl*)(pUserData);
@@ -112,6 +135,19 @@ bool Mp3AudioFormatReader::readSamples(float **dest_channels,
     }
 
     return impl_->readSamples(dest_channels, num_dest_channels, start_offset_of_dest, start_offset_of_file, num_samples);
+}
+bool Mp3AudioFormatReader::readInterleaveSamples(float *dest_channels,
+                                                 int num_dest_channels,
+                                                 int start_offset_of_dest,
+                                                 int64_t start_offset_of_file,
+                                                 int num_samples)
+{
+    (void)dest_channels;
+    (void)num_dest_channels;
+    (void)start_offset_of_dest;
+    (void)start_offset_of_file;
+    (void)num_samples;
+    return impl_->readInterleaveSamples(dest_channels, num_dest_channels, start_offset_of_dest, start_offset_of_file, num_samples);
 }
 }
 
