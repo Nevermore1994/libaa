@@ -17,6 +17,8 @@ add_executable(unit_test
 
         # fileio
         test_audio_file.cpp
+        test_wav_audio_format_reader.cpp
+        test_mp3_audio_format_reader.cpp
 
         # audio effect
         test_audio_effect.cpp
@@ -25,7 +27,6 @@ add_executable(unit_test
         # signal generator
         test_lfo_generator.cpp
 
-        test_wav_audio_format_reader.cpp
         )
 target_link_libraries(unit_test
         gmock_main
