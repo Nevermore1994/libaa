@@ -12,6 +12,7 @@ before_script:
   - pip install --user cpp-coveralls
 
 script:
+  - git submodule update --init --recursive
   - mkdir -p build
   - cd build
   - cmake -DCOVERAGE=ON ..
