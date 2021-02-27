@@ -10,7 +10,7 @@ namespace libaa
 {
 FilterCoeffs IIRFilter::calcFilterCoeffs(const IIRFilterParameter& iir_param, float sample_rate)
 {
-    FilterCoeffs coeffs{0.0f, };
+    FilterCoeffs coeffs{{0.0f,}};
 
     coeffs[Biquad::c0] = 1.0f;
     coeffs[Biquad::d0] = 0.0f;
