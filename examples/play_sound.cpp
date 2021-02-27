@@ -59,27 +59,17 @@
  * requested that these non-binding requests be included along with the
  * license above.
  */
-#include <stdio.h>
-#include <math.h>
+#include "libaa/fileio/aa_mp3_audio_format_reader.h"
 #include "portaudio.h"
+#include <iostream>
+#include <fstream>
+#include <cassert>
+#include <vector>
+#include <thread>
+using namespace std;
+using namespace libaa;
 
-#define NUM_SECONDS   (5)
-#define SAMPLE_RATE   (44100)
 #define FRAMES_PER_BUFFER  (64)
-
-#ifndef M_PI
-#define M_PI  (3.14159265)
-#endif
-
-#define TABLE_SIZE   (200)
-typedef struct
-{
-    float sine[TABLE_SIZE];
-    int left_phase;
-    int right_phase;
-    char message[20];
-}
-    paTestData;
 
 /* This routine will be called by the PortAudio engine when audio is needed.
 ** It may called at interrupt level on some machines so don't do anything
@@ -91,23 +81,28 @@ static int patestCallback( const void *inputBuffer, void *outputBuffer,
                            PaStreamCallbackFlags statusFlags,
                            void *userData )
 {
-    paTestData *data = (paTestData*)userData;
+    auto *reader = (Mp3AudioFormatReader*)userData;
     float *out = (float*)outputBuffer;
-    unsigned long i;
 
     (void) timeInfo; /* Prevent unused variable warnings. */
     (void) statusFlags;
     (void) inputBuffer;
 
-    for( i=0; i<framesPerBuffer; i++ )
+    vector<float> left_buffer(framesPerBuffer, 0);
+    vector<float> right_buffer(framesPerBuffer, 0);
+    float* data_refer_to[2] = {left_buffer.data(), right_buffer.data()};
+    auto read_ok = reader->readSamples(data_refer_to, 2, 0, 0, framesPerBuffer);
+
+
+    for(auto i=0; i < framesPerBuffer; i++ )
     {
-        *out++ = data->sine[data->left_phase];  /* left */
-        *out++ = data->sine[data->right_phase];  /* right */
-        data->left_phase += 1;
-        if( data->left_phase >= TABLE_SIZE ) data->left_phase -= TABLE_SIZE;
-        data->right_phase += 3; /* higher pitch so we can distinguish left and right. */
-        if( data->right_phase >= TABLE_SIZE ) data->right_phase -= TABLE_SIZE;
+        *out++ = left_buffer[i];   /* left */
+        *out++ = right_buffer[i];  /* right */
     }
+
+//    if(!read_ok){
+//        return paComplete;
+//    }
 
     return paContinue;
 }
@@ -117,28 +112,37 @@ static int patestCallback( const void *inputBuffer, void *outputBuffer,
  */
 static void StreamFinished( void* userData )
 {
-    paTestData *data = (paTestData *) userData;
-    printf( "Stream Completed: %s\n", data->message );
+    printf( "Stream Completed: %s\n", "data->message" );
 }
 
 /*******************************************************************/
-int main(void);
-int main(void)
+
+int main(int argc, char* argv[])
 {
+    if(argc < 2){
+        cerr << "Usage: " << argv[0] << "/path/to/audio/file" << endl;
+        return -1;
+    }
+
+    const auto input_file_path = string(argv[1]);
+
+    ifstream in_stream(input_file_path);
+    Mp3AudioFormatReader reader(in_stream);
+    if(!reader.isOpenOk()){
+        cerr << "open file failed\n";
+        return -1;
+    }
+
+    const auto sample_rate = reader.sample_rate;
+    const auto num_channels = reader.num_channels;
+    const auto num_frames = reader.length_in_samples;
+    const auto duration = double(num_frames) / sample_rate;
+    assert(num_channels == 2);
+
+
     PaStreamParameters outputParameters;
     PaStream *stream;
     PaError err;
-    paTestData data;
-    int i;
-
-    printf("PortAudio Test: output sine wave. SR = %d, BufSize = %d\n", SAMPLE_RATE, FRAMES_PER_BUFFER);
-
-    /* initialise sinusoidal wavetable */
-    for( i=0; i<TABLE_SIZE; i++ )
-    {
-        data.sine[i] = (float) sin( ((double)i/(double)TABLE_SIZE) * M_PI * 2. );
-    }
-    data.left_phase = data.right_phase = 0;
 
     err = Pa_Initialize();
     if( err != paNoError ) goto error;
@@ -157,22 +161,21 @@ int main(void)
         &stream,
         NULL, /* no input */
         &outputParameters,
-        SAMPLE_RATE,
+        sample_rate,
         FRAMES_PER_BUFFER,
         paClipOff,      /* we won't output out of range samples so don't bother clipping them */
         patestCallback,
-        &data );
+        &reader );
     if( err != paNoError ) goto error;
 
-    sprintf( data.message, "No Message" );
     err = Pa_SetStreamFinishedCallback( stream, &StreamFinished );
     if( err != paNoError ) goto error;
 
     err = Pa_StartStream( stream );
     if( err != paNoError ) goto error;
 
-    printf("Play for %d seconds.\n", NUM_SECONDS );
-    Pa_Sleep( NUM_SECONDS * 1000 );
+    printf("Play for %lf seconds.\n", duration );
+    Pa_Sleep( duration * 1000 );
 
     err = Pa_StopStream( stream );
     if( err != paNoError ) goto error;
