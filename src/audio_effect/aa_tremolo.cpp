@@ -2,7 +2,7 @@
 // Created by william on 2020/6/4.
 //
 
-#include "audio_effect/aa_tremolo.h"
+#include "libaa/audio_effect/aa_tremolo.h"
 
 namespace libaa
 {
@@ -25,6 +25,8 @@ std::string Tremolo::getName() const
 }
 void Tremolo::prepareToPlay(double sample_rate, int max_block_size)
 {
+    (void)max_block_size;
+
     impl_->lfo_phase_ = 0;
     impl_->invert_sample_rate_ = 1.0 / sample_rate;
 }

@@ -3,8 +3,8 @@
 // Created by William.Hua on 2021/1/15.
 //
 
-#include "audio_generator/aa_audio_signal_genrator.h"
-#include "audio_generator/aa_lfo_generator.h"
+#include "libaa/audio_generator/aa_audio_signal_genrator.h"
+#include "libaa/audio_generator/aa_lfo_generator.h"
 #include <gmock/gmock.h>
 
 using namespace testing;

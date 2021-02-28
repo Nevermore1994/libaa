@@ -2,8 +2,8 @@
 // Created by william on 2020/2/21.
 //
 
-#include "audio_effect/aa_delay_effect.h"
-#include "audio_basics/aa_delay_line_array.h"
+#include "libaa/audio_effect/aa_delay_effect.h"
+#include "libaa/audio_basics/aa_delay_line_array.h"
 namespace libaa
 {
 class DelayEffect::Impl
@@ -17,6 +17,8 @@ public:
 
 void DelayEffect::prepareToPlay(double sample_rate, int max_block_size)
 {
+    (void)max_block_size;
+
     int num_new_channel = 2;
 
     const auto max_delay_length = static_cast<size_t>(2.0 * sample_rate);

@@ -1,9 +1,9 @@
 //
 // Created by william on 2019/12/11.
 //
-#include "fileio/aa_audio_file.h"
-#include "dsp/aa_stft.h"
-#include "dsp/aa_window.h"
+#include "libaa/fileio/aa_audio_file.h"
+#include "libaa/dsp/aa_stft.h"
+#include "libaa/dsp/aa_window.h"
 #include <Eigen/Core>
 #include <iostream>
 #include <fstream>

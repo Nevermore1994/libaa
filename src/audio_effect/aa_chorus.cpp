@@ -2,9 +2,9 @@
 // Created by william on 2020/3/10.
 //
 
-#include "audio_effect/aa_chorus.h"
-#include "dsp/aa_lfo.h"
-#include "audio_basics/aa_delay_line_array.h"
+#include "libaa/audio_effect/aa_chorus.h"
+#include "libaa/dsp/aa_lfo.h"
+#include "libaa/audio_basics/aa_delay_line_array.h"
 
 namespace libaa
 {
@@ -24,6 +24,8 @@ Chorus::Chorus():
 
 void Chorus::prepareToPlay(double sample_rate, int max_block_size)
 {
+    (void)max_block_size;
+
     impl_->invert_sample_rate_ = 1.0/sample_rate;
 
     const int num_supported_channel = 2;

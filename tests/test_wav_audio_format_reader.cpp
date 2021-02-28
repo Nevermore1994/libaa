@@ -2,7 +2,7 @@
 //
 // Created by William.Hua on 2021/2/9.
 //
-#include "fileio/aa_wav_audio_format_reader.h"
+#include "libaa/fileio/aa_wav_audio_format_reader.h"
 
 #include "aa_test_helper.h"
 #include <gmock/gmock.h>

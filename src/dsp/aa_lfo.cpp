@@ -2,7 +2,7 @@
 // Created by william on 2020/2/26.
 //
 
-#include "dsp/aa_lfo.h"
+#include "libaa/dsp/aa_lfo.h"
 namespace libaa
 {
 float LFO::lfo(float phase, WaveformType waveform)

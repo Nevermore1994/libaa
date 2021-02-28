@@ -3,7 +3,7 @@
 //
 
 #include "kiss_fftr.h"
-#include "dsp/aa_fft.h"
+#include "libaa/dsp/aa_fft.h"
 
 namespace libaa
 {

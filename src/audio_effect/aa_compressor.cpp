@@ -2,7 +2,7 @@
 // Created by william on 2020/6/23.
 //
 
-#include "audio_effect/aa_compressor.h"
+#include "libaa/audio_effect/aa_compressor.h"
 
 namespace libaa
 {
@@ -11,6 +11,8 @@ class Compressor::Impl
 {
 public:
     void prepareToPlay(double sample_rate, int max_block_size)  {
+        (void)sample_rate;
+
         input_buffer_.setSize(1, max_block_size);
 
         xg_.resize(max_block_size);

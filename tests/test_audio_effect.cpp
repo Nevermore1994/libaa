@@ -2,17 +2,17 @@
 // Created by william on 2020/2/28.
 //
 
-#include "audio_effect/aa_vibrato_effect.h"
-#include "audio_effect/aa_delay_effect.h"
-#include "audio_basics/aa_delay_line_array.h"
-#include "audio_effect/aa_flanger.h"
-#include "audio_effect/aa_chorus.h"
-#include "audio_effect/aa_tremolo.h"
-#include "audio_effect/aa_compressor.h"
-#include "audio_effect/aa_distortion.h"
-#include "audio_effect/aa_robot.h"
-#include "audio_effect/aa_biquad_filter.h"
-#include "audio_effect/aa_iir_filter.h"
+#include "libaa/audio_effect/aa_vibrato_effect.h"
+#include "libaa/audio_effect/aa_delay_effect.h"
+#include "libaa/audio_basics/aa_delay_line_array.h"
+#include "libaa/audio_effect/aa_flanger.h"
+#include "libaa/audio_effect/aa_chorus.h"
+#include "libaa/audio_effect/aa_tremolo.h"
+#include "libaa/audio_effect/aa_compressor.h"
+#include "libaa/audio_effect/aa_distortion.h"
+#include "libaa/audio_effect/aa_robot.h"
+#include "libaa/audio_effect/aa_biquad_filter.h"
+#include "libaa/audio_effect/aa_iir_filter.h"
 #include <gmock/gmock.h>
 
 using namespace std;

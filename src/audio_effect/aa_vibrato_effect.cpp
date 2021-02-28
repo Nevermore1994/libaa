@@ -2,8 +2,8 @@
 // Created by william on 2020/2/28.
 //
 
-#include "audio_effect/aa_vibrato_effect.h"
-#include "audio_basics/aa_delay_line_array.h"
+#include "libaa/audio_effect/aa_vibrato_effect.h"
+#include "libaa/audio_basics/aa_delay_line_array.h"
 
 namespace libaa
 {
@@ -19,6 +19,8 @@ public:
 
 void VibratoEffect::prepareToPlay(double sample_rate, int max_block_size)
 {
+    (void)max_block_size;
+
     impl_->invert_sample_rate_ = 1.0/sample_rate;
 
     const int num_supported_channel = 2;

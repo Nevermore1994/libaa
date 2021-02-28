@@ -2,8 +2,8 @@
 // Created by william on 2020/2/20.
 //
 
-#include "audio_basics/aa_delay_line.h"
-#include "audio_basics/aa_delay_line_array.h"
+#include "libaa/audio_basics/aa_delay_line.h"
+#include "libaa/audio_basics/aa_delay_line_array.h"
 #include <gmock/gmock.h>
 using namespace testing;
 using namespace libaa;

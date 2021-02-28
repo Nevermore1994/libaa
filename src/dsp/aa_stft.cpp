@@ -2,9 +2,9 @@
 // Created by william on 2019/12/11.
 //
 
-#include "dsp/aa_window.h"
-#include "dsp/aa_stft.h"
-#include "dsp/aa_dsp_utilities.h"
+#include "libaa/dsp/aa_window.h"
+#include "libaa/dsp/aa_stft.h"
+#include "libaa/dsp/aa_dsp_utilities.h"
 
 namespace libaa
 {

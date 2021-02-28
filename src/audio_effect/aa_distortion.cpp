@@ -2,7 +2,7 @@
 // Created by admin on 2020/7/20.
 //
 
-#include "audio_effect/aa_distortion.h"
+#include "libaa/audio_effect/aa_distortion.h"
 
 namespace libaa
 {
@@ -100,6 +100,8 @@ Distortion::Distortion():
 
 void Distortion::prepareToPlay(double sample_rate, int max_block_size)
 {
+    (void)sample_rate;
+    (void)max_block_size;
 }
 
 void Distortion::reset()
