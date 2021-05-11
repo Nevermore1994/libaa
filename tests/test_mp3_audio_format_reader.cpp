@@ -51,12 +51,16 @@ class FakeStream : public InputStream
 public:
     ~FakeStream() override = default;
     int64_t read(uint8_t *dst_buf, int64_t size) override {
+        (void)dst_buf;
+        (void)size;
         return 0;
     }
     int64_t tellg() override {
         return 0;
     }
     int seekg(int64_t pos, int mode) override {
+        (void)pos;
+        (void)mode;
         return 0;
     }
     int64_t length() const override {
@@ -65,13 +69,13 @@ public:
 };
 
 
-TEST_F(AMp3AudioFormatReader, DISABLED_InitWithInputStream)
+TEST_F(AMp3AudioFormatReader, InitWithInputStream)
 {
     auto in_stream = std::unique_ptr<InputStream>(new FileStream(test_file_name));
     Mp3AudioFormatReader reader(std::move(in_stream));
 }
 
-TEST_F(AMp3AudioFormatReader, DISABLED_ReturnsFalseIfOpenFailed)
+TEST_F(AMp3AudioFormatReader, ReturnsFalseIfOpenFailed)
 {
     auto in_stream = std::unique_ptr<InputStream>(new FakeStream());
 
@@ -80,7 +84,7 @@ TEST_F(AMp3AudioFormatReader, DISABLED_ReturnsFalseIfOpenFailed)
     ASSERT_FALSE(reader.isOpenOk());
 }
 
-TEST_F(AMp3AudioFormatReader, DISABLED_ReturnTrueIfOpenSuccessfully)
+TEST_F(AMp3AudioFormatReader, ReturnTrueIfOpenSuccessfully)
 {
     auto in_stream = std::unique_ptr<InputStream>(new FileStream(test_file_name));
 
@@ -89,7 +93,7 @@ TEST_F(AMp3AudioFormatReader, DISABLED_ReturnTrueIfOpenSuccessfully)
     ASSERT_TRUE(reader.isOpenOk());
 }
 
-TEST_F(AMp3AudioFormatReader, DISABLED_ReadReturnFalseIfOpenFailed)
+TEST_F(AMp3AudioFormatReader, ReadReturnFalseIfOpenFailed)
 {
     auto fake_stream = std::unique_ptr<InputStream>(new FakeStream());
     Mp3AudioFormatReader reader(std::move(fake_stream));
@@ -99,7 +103,7 @@ TEST_F(AMp3AudioFormatReader, DISABLED_ReadReturnFalseIfOpenFailed)
 
     ASSERT_FALSE(ret);
 }
-TEST_F(AMp3AudioFormatReader, DISABLED_CanReadSamples)
+TEST_F(AMp3AudioFormatReader, CanReadSamples)
 {
     auto in_stream = std::unique_ptr<InputStream>(new FileStream(test_file_name));
     Mp3AudioFormatReader reader(std::move(in_stream));
@@ -109,7 +113,7 @@ TEST_F(AMp3AudioFormatReader, DISABLED_CanReadSamples)
     ASSERT_TRUE(ret);
 }
 
-TEST_F(AMp3AudioFormatReader, DISABLED_ReadWithStartOffsetOfFileWillChangePosition)
+TEST_F(AMp3AudioFormatReader, ReadWithStartOffsetOfFileWillChangePosition)
 {
     auto in_stream = std::unique_ptr<InputStream>(new FileStream(test_file_name));
     Mp3AudioFormatReader reader(std::move(in_stream));
