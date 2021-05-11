@@ -4,7 +4,7 @@
 
 #include "libaa/fileio/aa_mp3_audio_format_reader.h"
 #include "libaa/fileio/aa_aac_audio_format_reader.h"
-#include "libaa/fileio/aa_file_stream.h"
+#include "libaa/fileio/aa_file_input_stream.h"
 #include "portaudio.h"
 #include <iostream>
 #include <fstream>
@@ -83,7 +83,7 @@ int main(int argc, char* argv[])
 
     const auto input_file_path = string(argv[1]);
 
-    auto in_stream = std::unique_ptr<InputStream>(new FileStream(input_file_path));
+    auto in_stream = std::unique_ptr<InputStream>(new FileInputStream(input_file_path));
 
     AACAudioFormatReader reader(std::move(in_stream));
     if(!reader.isOpenOk()){
